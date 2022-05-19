@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:43:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/19 23:30:20 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/19 23:35:32 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_mlx	*malloc_mlx(void)
 	return (mlx);
 }
 
-int		main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	int			fd;
 	t_mlx		*mlx;
