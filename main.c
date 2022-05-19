@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:43:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/19 15:47:58 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/19 15:55:21 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		main(int ac, char **av)
 {
 	if (ac == 2)
 	{
-
+		
 	}
 	else
 		printf_error("error: wrong number of arguments");

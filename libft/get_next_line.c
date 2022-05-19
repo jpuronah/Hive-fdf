@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:21:27 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/04/28 13:38:58 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/19 15:53:28 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static int	ft_newline(int fd, char **line, char **save)
 	char		*tmp;
 
 	len = 0;
-	//printf("save_line\n%s\n", save[fd]);
 	while (save[fd][len] != '\n' && save[fd][len] != '\0')
 		++len;
 	if (save[fd][len] == '\n')
@@ -76,7 +75,6 @@ int	get_next_line(const int fd, char **line)
 		return (-1);
 	if (bytes_read == 0 && save[fd] == NULL)
 	{
-		//*line = NULL;
 		return (0);
 	}
 	return (ft_newline(fd, line, save));

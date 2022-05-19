@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 12:52:45 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/04/15 12:53:04 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/19 15:53:59 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_list	*ft_lstat(t_list *lst, size_t val)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (i < val && lst != NULL)
