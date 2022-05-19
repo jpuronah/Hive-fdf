@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:43:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/19 23:04:56 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/19 23:30:20 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int		main(int ac, char **av)
 	{
 		mlx->map = read_and_save_map(fd);
 		printf("%d, %d\n", mlx->map->width, mlx->map->height);
-		//get_vectors(mlx);
 	}
 	else
 		printf_error("error: wrong number of arguments");
