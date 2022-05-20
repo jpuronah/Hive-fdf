@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:43:12 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/19 23:36:18 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/20 14:22:17 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,11 @@ typedef struct s_mlx
 void		printf_error(char *reason);
 
 t_map		*init_map(void);
-t_map		*read_and_save_map(int fd);
+t_map		*read_and_save_map(int fd, t_map *map);
 void		get_map_width(char *line, t_map *map);
 void		get_map_parameters(char *line, t_map *map);
 
-t_vector	**get_vectors(char *save);
+t_vector	**get_vectors(char *save, t_map *map);
+t_map		*vectors_for_map(char *save, t_map *map);
 
 #endif

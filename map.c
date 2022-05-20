@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 17:02:45 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/19 23:32:03 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/20 14:31:59 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,25 +76,29 @@ char	*save_save(char *save, char *line)
 	return (tmp2);
 }
 
-t_map	*read_and_save_map(int fd)
+t_map	*read_and_save_map(int fd, t_map *map)
 {
 	int			ret;
 	char		*line;
 	char		*save;
-	t_map		*map;
+	char		*tmp;
 
-	map = init_map();
-	ret = get_next_line(fd, &line);
+	tmp = NULL;
 	save = (char *)malloc(sizeof(char));
+	ret = get_next_line(fd, &line);
 	while (ret == 1)
 	{
 		map->height++;
 		get_map_width(line, map);
-		save = save_save(save, line);
+		tmp = save_save(save, line);
+		save = (char *)malloc(sizeof(char) * (map->height * map->width + 1));
+		save = ft_strdup(tmp);
 		free(line);
 		ret = get_next_line(fd, &line);
 	}
 	map = malloc_map(map->width, map->height);
-	map->vectors = get_vectors(save);
+	//map->vectors = get_vectors(save, map);
+	map = vectors_for_map(save, map);
+	free(save);
 	return (map);
 }

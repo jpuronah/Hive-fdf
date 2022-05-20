@@ -6,7 +6,7 @@
 #    By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/19 15:44:35 by jpuronah          #+#    #+#              #
-#    Updated: 2022/05/19 23:32:23 by jpuronah         ###   ########.fr        #
+#    Updated: 2022/05/20 12:19:07 by jpuronah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ $(NAME):
 nf:
 	gcc -o $(NAME) $(LINKS) $(SOURCES) $(LIBFT)
 
-fsani:
+leaks:
 	gcc $(FLAGS) -o $(NAME) $(LINKS) $(SOURCES) $(LIBFT) -fsanitize=address
 
 clean:

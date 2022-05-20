@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:43:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/19 23:35:32 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/20 14:32:40 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,17 @@ int	main(int ac, char **av)
 
 	fd = open(av[1], O_RDONLY);
 	mlx = malloc_mlx();
+	mlx->map = init_map();
 	if (ac == 2 && fd > 0)
 	{
-		mlx->map = read_and_save_map(fd);
+		mlx->map = read_and_save_map(fd, mlx->map);
 		printf("%d, %d\n", mlx->map->width, mlx->map->height);
+		int i = 0;
+		while (i < (mlx->map->height * mlx->map->width))
+		{
+			printf("z (%d, %d): %d\n", mlx->map->vectors[i]->x, mlx->map->vectors[i]->y, mlx->map->vectors[i]->z);
+			i++;
+		}
 	}
 	else
 		printf_error("error: wrong number of arguments");
