@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:27:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/20 17:41:17 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/20 23:34:24 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,32 @@ t_mlx	*init_mlx(char *win_title, t_map *map)
 	return (mlx);
 }
 
+void	draw(int z, int x, int y)
+{
+
+}
+
+void	render(t_mlx *mlx)
+{
+	int		x;
+	int		y;
+
+	y = 0;
+	printf("%d\n", mlx->map->vectors[0]->z);
+	while (y < mlx->map->height)
+	{
+		x = 0;
+		while (x < mlx->map->width)
+		{
+			printf("%d\n", mlx->map->vectors[x + y]->z);
+			mlx_string_put(mlx->mlxptr, mlx->winptr, 40 + x * 20, 40 + y * 20, WHITE, ft_itoa(mlx->map->vectors[x + y]->z));
+			//draw(map->vectors[x + y]->z, x, y);
+			x++;
+		}
+		y++;
+	}
+}
+
 void	graphics(t_map *map, char *window_title)
 {
 	t_mlx	*mlx;
@@ -52,17 +78,8 @@ void	graphics(t_map *map, char *window_title)
 	mlx = init_mlx(window_title, map);
 	if (mlx == NULL)
 		printf_error ("Error; Cannot initialize mlx");
-	
 	mlx_key_hook(mlx->winptr, exit_with_esc, mlx);
+	mlx_string_put(mlx->mlxptr, mlx->winptr, 20, 20, WHITE, "Press 'ESC' for EXIT");
+	render(mlx);
 	mlx_loop(mlx->mlxptr);
-
-
-
-	/*printf("%d, %d\n", mlx->map->width, mlx->map->height);
-	int i = 0;
-	while (i < (mlx->map->height * mlx->map->width))
-	{
-		printf("z (%d, %d): %d\n", mlx->map->vectors[i]->x, mlx->map->vectors[i]->y, mlx->map->vectors[i]->z);
-		i++;
-	}*/
 }

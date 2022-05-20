@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:43:12 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/20 17:42:08 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/20 23:28:20 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FDF_H
 # define WIN_WIDTH 720
 # define WIN_HEIGHT 360
+# define WHITE 0xFFFFFF
 
 # include <mlx.h>
 # include "libft/libft.h"
