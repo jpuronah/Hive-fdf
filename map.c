@@ -6,29 +6,11 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 17:02:45 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/20 14:31:59 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:09:38 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-t_map	*malloc_map(int width, int height)
-{
-	t_map	*map;
-
-	map = ft_memalloc(sizeof(t_map));
-	if (map == NULL)
-		return (NULL);
-	map->width = width;
-	map->height = height;
-	map->vectors = ft_memalloc(sizeof(t_vector *) * width * height);
-	if (map->vectors == NULL)
-	{
-		ft_memdel((void **)&map);
-		return (NULL);
-	}
-	return (map);
-}
 
 t_map	*init_map(void)
 {
@@ -76,6 +58,44 @@ char	*save_save(char *save, char *line)
 	return (tmp2);
 }
 
+t_map	*malloc_map(t_map *tmp)
+{
+	t_map	*map;
+
+	map = ft_memalloc(sizeof(t_map));
+	if (map == NULL)
+		return (NULL);
+	map->width = tmp->width;
+	map->height = tmp->height;
+	map->vectors = (t_vector **)malloc(sizeof(t_vector) * tmp->width * tmp->height);
+	//map->vectors = ft_memalloc(sizeof(t_vector *) * tmp->width * tmp->height);
+	if (map->vectors == NULL)
+	{
+		ft_memdel((void **)&map);
+		return (NULL);
+	}
+	free(tmp);
+	return (map);
+}
+
+/*t_map	*malloc_map(int width, int height)
+{
+	t_map	*map;
+
+	map = ft_memalloc(sizeof(t_map));
+	if (map == NULL)
+		return (NULL);
+	map->width = width;
+	map->height = height;
+	map->vectors = ft_memalloc(sizeof(t_vector *) * width * height);
+	if (map->vectors == NULL)
+	{
+		ft_memdel((void **)&map);
+		return (NULL);
+	}
+	return (map);
+}*/
+
 t_map	*read_and_save_map(int fd, t_map *map)
 {
 	int			ret;
@@ -96,7 +116,8 @@ t_map	*read_and_save_map(int fd, t_map *map)
 		free(line);
 		ret = get_next_line(fd, &line);
 	}
-	map = malloc_map(map->width, map->height);
+	map = malloc_map(map);
+	//map = malloc_map(map->width, map->height);
 	//map->vectors = get_vectors(save, map);
 	map = vectors_for_map(save, map);
 	free(save);

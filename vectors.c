@@ -6,13 +6,26 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 23:31:04 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/20 14:32:11 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:11:37 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_vector	*get_vector(int x, int y, char *str)
+//Ei hajuu onks tää mintis
+static int	cleanup(char *save, t_map **map)
+{
+	if (save)
+		save = NULL;
+	if (map && *map)
+	{
+		ft_memdel((void **)&(*map)->vectors);
+		ft_memdel((void **)map);
+	}
+	return (0);
+}
+
+t_vector	*init_vector(int x, int y, char *str)
 {
 	t_vector	*vector;
 
@@ -27,18 +40,6 @@ t_vector	*get_vector(int x, int y, char *str)
 	return (vector);
 }
 
-//Ei hajuu onks tää mintis
-static int	cleanup(char *save, t_map **map)
-{
-	save = NULL;
-	if (map && *map)
-	{
-		ft_memdel((void **)&(*map)->vectors);
-		ft_memdel((void **)map);
-	}
-	return (0);
-}
-
 t_map *vectors_for_map(char *save, t_map *map)
 {
 	char		**split_save;
@@ -47,22 +48,23 @@ t_map *vectors_for_map(char *save, t_map *map)
 	int			xy;
 
 	y = 0;
+	split_save = ft_strsplit(save, ' ');
 	if (split_save == NULL)
 		cleanup(save, &map);
-	split_save = ft_strsplit(save, ' ');
 	while (y < map->height)
 	{
 		x = 0;
 		while (x < map->width)
 		{
 			xy = x + (y * map->width);
-			map->vectors[y * map->width + x] = get_vector(x, y, split_save[xy]);
+			map->vectors[y * map->width + x] = init_vector(x, y, split_save[xy]);
 			x++;
 		}
 		y++;
 	}
 	//map_depth(*map);
 	//fill_colors(*map);
+	ft_memdel((char *)split_save);
 	save = NULL;
 	return (map);
 }
