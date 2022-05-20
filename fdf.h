@@ -6,17 +6,20 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:43:12 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/20 14:22:17 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:42:08 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
+# define WIN_WIDTH 720
+# define WIN_HEIGHT 360
 
 # include <mlx.h>
 # include "libft/libft.h"
 # include <fcntl.h>
 # include <stdio.h>
+# include <X11/keysym.h>
 
 typedef struct s_vector
 {
@@ -48,5 +51,7 @@ void		get_map_parameters(char *line, t_map *map);
 
 t_vector	**get_vectors(char *save, t_map *map);
 t_map		*vectors_for_map(char *save, t_map *map);
+
+void		graphics(t_map *map, char *window_title);
 
 #endif

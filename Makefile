@@ -6,12 +6,12 @@
 #    By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/19 15:44:35 by jpuronah          #+#    #+#              #
-#    Updated: 2022/05/20 12:19:07 by jpuronah         ###   ########.fr        #
+#    Updated: 2022/05/20 17:16:03 by jpuronah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
-SOURCES = main.c map.c vectors.c
+SOURCES = main.c map.c vectors.c graphics.c
 INCLUDES = fdf.h
 FLAGS = -Wall -Wextra -Werror 
 LINKS = -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext

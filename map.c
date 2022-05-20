@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 17:02:45 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/20 17:09:38 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:38:32 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ t_map	*malloc_map(t_map *tmp)
 		return (NULL);
 	map->width = tmp->width;
 	map->height = tmp->height;
-	map->vectors = (t_vector **)malloc(sizeof(t_vector) * tmp->width * tmp->height);
-	//map->vectors = ft_memalloc(sizeof(t_vector *) * tmp->width * tmp->height);
+	//map->vectors = (t_vector **)malloc(sizeof(t_vector) * tmp->width * tmp->height);
+	map->vectors = ft_memalloc(sizeof(t_vector) * tmp->width * tmp->height);
 	if (map->vectors == NULL)
 	{
 		ft_memdel((void **)&map);
@@ -77,24 +77,6 @@ t_map	*malloc_map(t_map *tmp)
 	free(tmp);
 	return (map);
 }
-
-/*t_map	*malloc_map(int width, int height)
-{
-	t_map	*map;
-
-	map = ft_memalloc(sizeof(t_map));
-	if (map == NULL)
-		return (NULL);
-	map->width = width;
-	map->height = height;
-	map->vectors = ft_memalloc(sizeof(t_vector *) * width * height);
-	if (map->vectors == NULL)
-	{
-		ft_memdel((void **)&map);
-		return (NULL);
-	}
-	return (map);
-}*/
 
 t_map	*read_and_save_map(int fd, t_map *map)
 {

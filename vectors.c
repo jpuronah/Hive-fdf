@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 23:31:04 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/20 17:11:37 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:17:51 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_map *vectors_for_map(char *save, t_map *map)
 	}
 	//map_depth(*map);
 	//fill_colors(*map);
-	ft_memdel((char *)split_save);
+	ft_memdel((void *)split_save);
 	save = NULL;
 	return (map);
 }

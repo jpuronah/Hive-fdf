@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:43:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/20 16:46:07 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:34:46 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,29 @@ int	main(int ac, char **av)
 {
 	int			fd;
 	t_mlx		*mlx;
+	t_map		*map;
 
 	fd = open(av[1], O_RDONLY);
 	mlx = malloc_mlx();
-	mlx->map = init_map();
+	map = init_map();
 	if (ac == 2 && fd > 0)
 	{
-		mlx->map = read_and_save_map(fd, mlx->map);
-		printf("%d, %d\n", mlx->map->width, mlx->map->height);
-		int i = 0;
-		while (i < (mlx->map->height * mlx->map->width))
-		{
-			printf("z (%d, %d): %d\n", mlx->map->vectors[i]->x, mlx->map->vectors[i]->y, mlx->map->vectors[i]->z);
-			i++;
-		}
+		map = read_and_save_map(fd, map);
+		graphics(map, av[1]);
 	}
 	else
 		printf_error("error: wrong number of arguments");
-	free(mlx->map);
+	int i = 0;
+	while (i < (map->height * map->width))
+	{
+		printf("z (%d, %d): %d\n", map->vectors[i]->x, map->vectors[i]->y, map->vectors[i]->z);
+		i++;
+	}
+	i = 0;
+	while (map->vectors[i] != NULL)
+		free(map->vectors[i++]);
+	free(map->vectors);
+	free(map);
 	free(mlx);
 	close(fd);
 	return (0);
