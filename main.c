@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:43:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/20 23:35:22 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/23 17:11:06 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,11 @@ int	main(int ac, char **av)
 	if (ac == 2 && fd > 0)
 	{
 		map = read_and_save_map(fd, map);
-		graphics(map, av[1]);
+		//graphics(map, av[1]);
 	}
 	else
 		printf_error("error: wrong number of arguments");
-	int i = 0;
-	while (i < (map->height * map->width))
-	{
-		printf("z (%d, %d): %d\n", map->vectors[i]->x, map->vectors[i]->y, map->vectors[i]->z);
-		i++;
-	}
-	i = 0;
+	int	i = 0;
 	while (map->vectors[i] != NULL)
 		free(map->vectors[i++]);
 	free(map->vectors);

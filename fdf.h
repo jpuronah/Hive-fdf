@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+///* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:43:12 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/20 23:28:20 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/23 16:26:16 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ typedef struct s_mlx
 void		printf_error(char *reason);
 
 t_map		*init_map(void);
+t_map		*malloc_map(t_map *tmp);
 t_map		*read_and_save_map(int fd, t_map *map);
-void		get_map_width(char *line, t_map *map);
 void		get_map_parameters(char *line, t_map *map);
 
 t_vector	**get_vectors(char *save, t_map *map);

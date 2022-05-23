@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 13:53:10 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/20 17:43:16 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/23 17:04:51 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	**ft_strsplit(char const *s, char c)
 		if (!array)
 			return (NULL);
 		array = ft_split(s, c, array);
-		free((void *)s);
+		//free((void *)s);
 		return (array);
 	}
 	else

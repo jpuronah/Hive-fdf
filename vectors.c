@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 23:31:04 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/20 17:17:51 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/23 17:32:13 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_vector	*init_vector(int x, int y, char *str)
 {
 	t_vector	*vector;
 
-	//printf("getvector: %d, %d, %s\n", x, y, str);
 	vector = ft_memalloc(sizeof(t_vector));
 	if (vector == NULL)
 		return (NULL);
@@ -40,14 +39,16 @@ t_vector	*init_vector(int x, int y, char *str)
 	return (vector);
 }
 
-t_map *vectors_for_map(char *save, t_map *map)
+t_map *vectors_for_map(char *save, t_map *tmp)
 {
 	char		**split_save;
 	int			x;
 	int			y;
-	int			xy;
+	t_map		*map;
 
 	y = 0;
+	printf("vec: \n");
+	map = malloc_map(tmp);
 	split_save = ft_strsplit(save, ' ');
 	if (split_save == NULL)
 		cleanup(save, &map);
@@ -56,15 +57,18 @@ t_map *vectors_for_map(char *save, t_map *map)
 		x = 0;
 		while (x < map->width)
 		{
-			xy = x + (y * map->width);
-			map->vectors[y * map->width + x] = init_vector(x, y, split_save[xy]);
+			map->vectors[y * map->width + x] = init_vector(x, y, split_save[x + (y * map->width)]);
 			x++;
 		}
 		y++;
 	}
-	//map_depth(*map);
-	//fill_colors(*map);
-	ft_memdel((void *)split_save);
-	save = NULL;
+	y = 0;
+	while (split_save[y])
+	{
+		printf("split: %s\n", split_save[y]);
+		free(split_save[y]);
+		y++;
+	}
+	free(split_save);
 	return (map);
 }

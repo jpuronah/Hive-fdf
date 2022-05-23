@@ -6,18 +6,37 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:27:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/20 23:34:24 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/23 17:12:39 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+void	free_and_exit(int key, t_mlx *mlx)
+{
+	int	i;
+
+	i = 0;
+	if (key == XK_Escape)
+	{
+		while (mlx->map->vectors[i] != NULL)
+		{
+			free(mlx->map->vectors[i]);
+			i++;
+		}
+		free(mlx->map->vectors);
+		free(mlx->map);
+		free(mlx);
+		exit(EXIT_SUCCESS);
+	}
+}
+
 int		exit_with_esc(int key, t_mlx *mlx)
 {
 	(void)mlx;
-	//printf("%d\n", key);
+
 	if (key == XK_Escape)
-		exit(EXIT_SUCCESS);
+		free_and_exit(key, mlx);
 	return (0);
 }
 
@@ -31,6 +50,7 @@ t_mlx	*init_mlx(char *win_title, t_map *map)
 	mlx->mlxptr = mlx_init();
 	mlx->winptr = mlx_new_window(mlx->mlxptr, WIN_WIDTH, WIN_HEIGHT, win_title);
 	mlx->map = map;
+	//free(map);
 	//mlx->image = new_image(mlx);
 	//mlx->mouse = ft_memalloc(sizeof(t_mouse));
 	//mlx->cam = ft_memalloc(sizeof(t_cam));
@@ -45,10 +65,10 @@ t_mlx	*init_mlx(char *win_title, t_map *map)
 	return (mlx);
 }
 
-void	draw(int z, int x, int y)
+/*void	draw(int z, int x, int y)
 {
 
-}
+}*/
 
 void	render(t_mlx *mlx)
 {
@@ -56,14 +76,12 @@ void	render(t_mlx *mlx)
 	int		y;
 
 	y = 0;
-	printf("%d\n", mlx->map->vectors[0]->z);
 	while (y < mlx->map->height)
 	{
 		x = 0;
 		while (x < mlx->map->width)
 		{
-			printf("%d\n", mlx->map->vectors[x + y]->z);
-			mlx_string_put(mlx->mlxptr, mlx->winptr, 40 + x * 20, 40 + y * 20, WHITE, ft_itoa(mlx->map->vectors[x + y]->z));
+			mlx_string_put(mlx->mlxptr, mlx->winptr, 40 + x * 20, 40 + y * 20, WHITE, ft_itoa(mlx->map->vectors[x + (y * mlx->map->width)]->z));
 			//draw(map->vectors[x + y]->z, x, y);
 			x++;
 		}
@@ -78,7 +96,8 @@ void	graphics(t_map *map, char *window_title)
 	mlx = init_mlx(window_title, map);
 	if (mlx == NULL)
 		printf_error ("Error; Cannot initialize mlx");
-	mlx_key_hook(mlx->winptr, exit_with_esc, mlx);
+	if (mlx_key_hook(mlx->winptr, exit_with_esc, mlx) != 0)
+		printf("moi");
 	mlx_string_put(mlx->mlxptr, mlx->winptr, 20, 20, WHITE, "Press 'ESC' for EXIT");
 	render(mlx);
 	mlx_loop(mlx->mlxptr);
