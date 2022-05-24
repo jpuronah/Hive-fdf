@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:27:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/23 17:12:39 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/24 13:42:28 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ void	free_and_exit(int key, t_mlx *mlx)
 		}
 		free(mlx->map->vectors);
 		free(mlx->map);
+		mlx->map = NULL;
 		free(mlx);
+		mlx = NULL;
 		exit(EXIT_SUCCESS);
 	}
 }

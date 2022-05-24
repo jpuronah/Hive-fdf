@@ -47,7 +47,7 @@ void		printf_error(char *reason);
 
 t_map		*init_map(void);
 t_map		*malloc_map(t_map *tmp);
-t_map		*read_and_save_map(int fd, t_map *map);
+void		read_and_save_map(int fd);
 void		get_map_parameters(char *line, t_map *map);
 
 t_vector	**get_vectors(char *save, t_map *map);

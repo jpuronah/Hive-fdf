@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 23:31:04 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/23 17:32:13 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/24 13:40:54 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ t_vector	*init_vector(int x, int y, char *str)
 {
 	t_vector	*vector;
 
-	vector = ft_memalloc(sizeof(t_vector));
+	vector = NULL;
+	vector = malloc(sizeof(t_vector));
+	//vector = ft_memalloc(sizeof(t_vector));
 	if (vector == NULL)
 		return (NULL);
 	vector->x = x;
@@ -47,7 +49,6 @@ t_map *vectors_for_map(char *save, t_map *tmp)
 	t_map		*map;
 
 	y = 0;
-	printf("vec: \n");
 	map = malloc_map(tmp);
 	split_save = ft_strsplit(save, ' ');
 	if (split_save == NULL)
@@ -65,7 +66,6 @@ t_map *vectors_for_map(char *save, t_map *tmp)
 	y = 0;
 	while (split_save[y])
 	{
-		printf("split: %s\n", split_save[y]);
 		free(split_save[y]);
 		y++;
 	}

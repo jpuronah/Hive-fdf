@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 17:02:45 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/23 17:30:20 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/24 13:38:24 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,11 @@ static char	*save_save(char *save, char *line)
 		tmp = ft_strjoin(save, line);
 	else
 		tmp = ft_strdup(line);
+	tmp2 = ft_strjoin(tmp, " ");
 	if (tmp)
-		tmp2 = ft_strjoin(tmp, " ");
-	if (save)
-		free(save);
-	if (line)
-		free(line);
-	//free(tmp);
-	//free(tmp2);
+		free(tmp);
+	free(save);
+	free(line);
 	return (tmp2);
 }
 
@@ -78,25 +75,34 @@ t_map	*malloc_map(t_map *tmp)
 		return (NULL);
 	map->width = tmp->width;
 	map->height = tmp->height;
+	map->vectors = NULL;
 	map->vectors = (t_vector **)malloc(sizeof(t_vector) * tmp->width * tmp->height);
 	if (map->vectors == NULL)
 	{
 		ft_memdel((void **)&map);
 		return (NULL);
 	}
+	/*tmp->vectors[0]->x = 0;
+	tmp->vectors[0]->y = 0;
+	tmp->vectors[0]->z = 0;*/
+	free(tmp->vectors);
+	tmp->vectors = NULL;
 	free(tmp);
+	tmp = NULL;
 	return (map);
 }
 
-t_map	*read_and_save_map(int fd, t_map *map)
+void	read_and_save_map(int fd)
 {
 	int			ret;
 	char		*line;
 	char		*save;
 	char		*tmp;
+	t_map		*map;
 
 	tmp = NULL;
 	save = NULL;
+	map = init_map();
 	ret = get_next_line(fd, &line);
 	while (ret == 1)
 	{
@@ -107,10 +113,8 @@ t_map	*read_and_save_map(int fd, t_map *map)
 		free(tmp);
 		ret = get_next_line(fd, &line);
 	}
-	printf("map: \n");
 	map = malloc_map(map);
 	map = vectors_for_map(save, map);
 	graphics(map, "Title");
-	free(save);
-	return (map);
+	//return (map);
 }
