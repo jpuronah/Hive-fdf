@@ -6,11 +6,13 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 17:02:45 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/24 13:38:24 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:30:38 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+//	Todella kyseenalasia juttuja täällä
 
 t_map	*init_map(void)
 {
@@ -19,6 +21,8 @@ t_map	*init_map(void)
 	map = (t_map *)malloc(sizeof(t_map));
 	map->width = 0;
 	map->height = 0;
+	map->depth_max = 0;
+	map->depth_min = 0;
 	map->vectors = NULL;
 	return (map);
 }
@@ -33,7 +37,7 @@ static void	get_map_width(char *line, t_map *map)
 	map->height++;
 	while (*line != '\0' && *line != '\n')
 	{
-		if (*line >= '0' && *line <= '9')
+		if ((*line >= '0' && *line <= '9') || *line == '-' &&(*line + 1 >= '0' && *line + 1 <= '9'))
 			width++;
 		else if (*line == ' ')
 			space++;
@@ -41,9 +45,9 @@ static void	get_map_width(char *line, t_map *map)
 			printf_error("error: inputfile character error");
 		line++;
 	}
-	if (map->width > 0)
-		if (map->width != width || space != width - 1)
-			printf_error("error: inputfile width error");
+	//if (map->width > 0)
+	//	if (map->width != width || space != width - 1)
+	//		printf_error("error: inputfile width error");
 	map->width = width;
 }
 
@@ -75,6 +79,7 @@ t_map	*malloc_map(t_map *tmp)
 		return (NULL);
 	map->width = tmp->width;
 	map->height = tmp->height;
+	map->param = tmp->param;
 	map->vectors = NULL;
 	map->vectors = (t_vector **)malloc(sizeof(t_vector) * tmp->width * tmp->height);
 	if (map->vectors == NULL)
@@ -82,9 +87,6 @@ t_map	*malloc_map(t_map *tmp)
 		ft_memdel((void **)&map);
 		return (NULL);
 	}
-	/*tmp->vectors[0]->x = 0;
-	tmp->vectors[0]->y = 0;
-	tmp->vectors[0]->z = 0;*/
 	free(tmp->vectors);
 	tmp->vectors = NULL;
 	free(tmp);
@@ -92,7 +94,7 @@ t_map	*malloc_map(t_map *tmp)
 	return (map);
 }
 
-void	read_and_save_map(int fd)
+void	read_and_save_map(int fd, int scale, char *title)
 {
 	int			ret;
 	char		*line;
@@ -103,6 +105,7 @@ void	read_and_save_map(int fd)
 	tmp = NULL;
 	save = NULL;
 	map = init_map();
+	map->param = scale;
 	ret = get_next_line(fd, &line);
 	while (ret == 1)
 	{
@@ -115,6 +118,5 @@ void	read_and_save_map(int fd)
 	}
 	map = malloc_map(map);
 	map = vectors_for_map(save, map);
-	graphics(map, "Title");
-	//return (map);
+	graphics(map, title);
 }

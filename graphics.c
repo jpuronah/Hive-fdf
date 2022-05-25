@@ -6,11 +6,12 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:27:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/24 13:42:28 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:39:57 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <math.h>
 
 void	free_and_exit(int key, t_mlx *mlx)
 {
@@ -19,12 +20,19 @@ void	free_and_exit(int key, t_mlx *mlx)
 	i = 0;
 	if (key == XK_Escape)
 	{
-		while (mlx->map->vectors[i] != NULL)
+		while (mlx->map->vectors[i])
 		{
 			free(mlx->map->vectors[i]);
+			mlx->map->vectors[i]->x = 0;
+			mlx->map->vectors[i]->y = 0;
+			mlx->map->vectors[i]->z = 0;
 			i++;
 		}
 		free(mlx->map->vectors);
+		mlx->map->height = 0;
+		mlx->map->width = 0;
+		//free(mlx->mlxptr);
+		//free(mlx->winptr);
 		free(mlx->map);
 		mlx->map = NULL;
 		free(mlx);
@@ -42,6 +50,32 @@ int		exit_with_esc(int key, t_mlx *mlx)
 	return (0);
 }
 
+t_vector	get_vector_for_render(t_map *map, int x, int y)
+{
+	/*printf("(%d, ", map->vectors[y * map->width + x]->x);
+	printf("%d): ", map->vectors[y * map->width + x]->y);
+	printf("%d\n", map->vectors[y * map->width + x]->z);*/
+	return (*map->vectors[y * map->width + x]);
+}
+
+t_vector	project_vector(t_vector v, t_mlx *mlx)
+{
+	//v.x -= (double)(mlx->map->width - 1) / 2.0f;
+	//v.y -= (double)(mlx->map->height - 1) / 2.0f;
+	//printf("proje z: %d\n", v.z);
+
+	v.x -= (mlx->map->width - 1) / 2;
+	v.y -= (mlx->map->height - 1) / 2;
+	v.z -= (double)(mlx->map->depth_min + mlx->map->depth_max) / 2.0f;
+	//printf("proje z: %d\n", v.z);
+	//v = rotate(v, mlx->cam);
+	v.x *= mlx->cam->scale;
+	v.y *= mlx->cam->scale;
+	v.x += mlx->cam->offsetx;
+	v.y += mlx->cam->offsety;
+	return (v);
+}
+
 t_mlx	*init_mlx(char *win_title, t_map *map)
 {
 	t_mlx	*mlx;
@@ -51,44 +85,85 @@ t_mlx	*init_mlx(char *win_title, t_map *map)
 		return (NULL);
 	mlx->mlxptr = mlx_init();
 	mlx->winptr = mlx_new_window(mlx->mlxptr, WIN_WIDTH, WIN_HEIGHT, win_title);
+	mlx->image = new_image(mlx);
 	mlx->map = map;
-	//free(map);
-	//mlx->image = new_image(mlx);
-	//mlx->mouse = ft_memalloc(sizeof(t_mouse));
-	//mlx->cam = ft_memalloc(sizeof(t_cam));
-	//if (mlx->mlxptr == NULL || mlx->window == NULL || mlx->cam == NULL ||
-	//		mlx->image == NULL || mlx->mouse == NULL)
-	//	return (mlxdel(mlx));
-	/*mlx->cam->x = 0.5;
+	mlx->cam = ft_memalloc(sizeof(t_cam));
+	mlx->cam->x = 0.5;
 	mlx->cam->y = 0.5;
 	mlx->cam->scale = 32;
 	mlx->cam->offsetx = WIN_WIDTH / 2;
-	mlx->cam->offsety = WIN_HEIGHT / 2;*/
+	mlx->cam->offsety = WIN_HEIGHT / 2;
+	//free(map->vectors);
+	//free(map);
+
+	//mlx->mouse = ft_memalloc(sizeof(t_mouse));
 	return (mlx);
 }
 
-/*void	draw(int z, int x, int y)
+static int	init_line(t_mlx *mlx, t_line *l, t_vector *vector1, t_vector *vector2)
 {
+	if (vector1->x < 0 || vector1->x >= WIN_WIDTH || vector1->y < 0 || vector1->y >= WIN_HEIGHT
+		|| vector2->x < 0 || vector2->x >= WIN_WIDTH || vector2->y < 0 || vector2->y >= WIN_HEIGHT)
+		return (1);
+	image_set_pixel(mlx->image, (int)vector1->x, (int)vector1->y, 0xFFFFFF);
+	l->err2 = l->err;
+	if (l->err2 > -l->delta_x)
+	{
+		l->err -= l->delta_y;
+		vector1->x += l->sx;
+	}
+	if (l->err2 < l->delta_y)
+	{
+		l->err += l->delta_x;
+		vector1->y += l->sy;
+	}
+	return (0);
+}
 
-}*/
+static void		draw(t_mlx *mlx, t_vector vector1, t_vector vector2)
+{
+	t_line	line;
+
+	vector1.x = (int)vector1.x;
+	vector2.x = (int)vector2.x;
+	vector1.y = (int)vector1.y;
+	vector2.y = (int)vector2.y;
+	line.start = vector1;
+	line.stop = vector2;
+	// if joku menee mäpist ulos nii return nolla
+	line.delta_x = (int)ft_abs((int)vector2.x - (int)vector1.x);
+	line.sx = (int)vector1.x < (int)vector2.x ? 1 : -1;
+	line.delta_y = (int)ft_abs((int)vector2.y - (int)vector1.y);
+	line.sy = (int)vector1.y < (int)vector2.y ? 1 : -1;
+	line.err = (line.delta_x > line.delta_y ? line.delta_x : -line.delta_y) / 2;
+	while (((int)vector1.x != (int)vector2.x || (int)vector1.y != (int)vector2.y))
+		if (init_line(mlx, &line, &vector1, &vector2))
+			break ;
+}
 
 void	render(t_mlx *mlx)
 {
-	int		x;
-	int		y;
+	int			x;
+	int			y;
+	t_vector	vector;
 
+	clear_image(mlx->image);
 	y = 0;
 	while (y < mlx->map->height)
 	{
 		x = 0;
 		while (x < mlx->map->width)
 		{
-			mlx_string_put(mlx->mlxptr, mlx->winptr, 40 + x * 20, 40 + y * 20, WHITE, ft_itoa(mlx->map->vectors[x + (y * mlx->map->width)]->z));
-			//draw(map->vectors[x + y]->z, x, y);
+			vector = project_vector(get_vector_for_render(mlx->map, x, y), mlx);
+			if (x + 1 < mlx->map->width)
+				draw(mlx, vector, project_vector(get_vector_for_render(mlx->map, x + 1, y), mlx));
+			if (y + 1 < mlx->map->height)
+				draw(mlx, vector, project_vector(get_vector_for_render(mlx->map, x, y + 1), mlx));
 			x++;
 		}
 		y++;
 	}
+	mlx_put_image_to_window(mlx->mlxptr, mlx->winptr, mlx->image->image, 0, 30);
 }
 
 void	graphics(t_map *map, char *window_title)
@@ -98,8 +173,7 @@ void	graphics(t_map *map, char *window_title)
 	mlx = init_mlx(window_title, map);
 	if (mlx == NULL)
 		printf_error ("Error; Cannot initialize mlx");
-	if (mlx_key_hook(mlx->winptr, exit_with_esc, mlx) != 0)
-		printf("moi");
+	mlx_key_hook(mlx->winptr, exit_with_esc, mlx);
 	mlx_string_put(mlx->mlxptr, mlx->winptr, 20, 20, WHITE, "Press 'ESC' for EXIT");
 	render(mlx);
 	mlx_loop(mlx->mlxptr);

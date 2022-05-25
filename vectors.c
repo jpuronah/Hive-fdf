@@ -6,11 +6,42 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 23:31:04 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/24 13:40:54 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:40:27 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+
+void		find_depth(t_map *map)
+{
+	int			min;
+	int			max;
+	t_vector	v;
+	t_vector	cur;
+
+	min = 0;
+	max = 0;
+	v.y = 0;
+	while (v.y < map->height)
+	{
+		v.x = 0;
+		while (v.x < map->width)
+		{
+			//printf("looppi\n");
+			cur = *map->vectors[(int)v.y * map->width + (int)v.x];
+			//printf("%d (%d, %d)\n", cur.z, cur.x, cur.y);
+			if (cur.z < min)
+				min = cur.z;
+			if (cur.z > max)
+				max = cur.z;
+			v.x++;
+		}
+		v.y++;
+	}
+	map->depth_min = min;
+	map->depth_max = max;
+}
 
 //Ei hajuu onks tää mintis
 static int	cleanup(char *save, t_map **map)
@@ -37,6 +68,7 @@ t_vector	*init_vector(int x, int y, char *str)
 	vector->x = x;
 	vector->y = y;
 	vector->z = ft_atoi(str);
+	vector->color = 0;
 	//vector->color = 0xFFFFFF;
 	return (vector);
 }
@@ -70,5 +102,6 @@ t_map *vectors_for_map(char *save, t_map *tmp)
 		y++;
 	}
 	free(split_save);
+	find_depth(map);
 	return (map);
 }
