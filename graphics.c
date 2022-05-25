@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:27:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/25 17:55:22 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/25 18:15:55 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_vector	get_vector_for_render(t_map *map, int x, int y)
 	return (*map->vectors[y * map->width + x]);
 }
 
-t_vector	rotate(t_vector p, t_cam *r)
+t_vector	geometry_stuff(t_vector p, t_cam *r)
 {
 	t_vector	v;
 	double		x;
@@ -74,7 +74,7 @@ t_vector	project_vector(t_vector v, t_mlx *mlx)
 	v.y -= (double)(mlx->map->height - 1) / 2.0f;
 	v.z -= (double)(mlx->map->depth_min + mlx->map->depth_max) / 2.0f;
 	//printf("proje z: %d\n", v.z);
-	v = rotate(v, mlx->cam);
+	v = geometry_stuff(v, mlx->cam);
 	v.x *= mlx->cam->scale;
 	v.y *= mlx->cam->scale;
 	v.x += mlx->cam->offsetx;
@@ -111,7 +111,7 @@ static int	init_line(t_mlx *mlx, t_line *l, t_vector *vector1, t_vector *vector2
 	if (vector1->x < 0 || vector1->x >= WIN_WIDTH || vector1->y < 0 || vector1->y >= WIN_HEIGHT
 		|| vector2->x < 0 || vector2->x >= WIN_WIDTH || vector2->y < 0 || vector2->y >= WIN_HEIGHT)
 		return (1);
-	image_set_pixel(mlx->image, (int)vector1->x, (int)vector1->y, 0xFFFFFF);
+	put_pixel_in_image(mlx->image, (int)vector1->x, (int)vector1->y, 0xFFFFFF);
 	l->err2 = l->err;
 	if (l->err2 > -l->delta_x)
 	{
@@ -153,7 +153,7 @@ void	render(t_mlx *mlx)
 	int			y;
 	t_vector	vector;
 
-	clear_image(mlx->image);
+	reset_image(mlx->image);
 	y = 0;
 	while (y < mlx->map->height)
 	{
@@ -175,9 +175,7 @@ void	render(t_mlx *mlx)
 int		key_event(int key, t_mlx *mlx)
 {
 	(void)mlx;
-	int		i;
 
-	i = 1;
 	printf("%d\n", key);
 	if (key == XK_Escape)
 		free_and_exit(key, mlx);

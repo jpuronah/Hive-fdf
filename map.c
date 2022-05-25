@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 17:02:45 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/25 16:30:38 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/25 18:15:31 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	get_map_width(char *line, t_map *map)
 	map->height++;
 	while (*line != '\0' && *line != '\n')
 	{
-		if ((*line >= '0' && *line <= '9') || *line == '-' &&(*line + 1 >= '0' && *line + 1 <= '9'))
+		if ((*line >= '0' && *line <= '9'))
 			width++;
 		else if (*line == ' ')
 			space++;

@@ -98,8 +98,8 @@ t_mlx		*malloc_mlx(void);
 t_image		*new_image(t_mlx *mlx);
 
 t_image		*new_image(t_mlx *mlx);
-t_image		*del_image(t_mlx *mlx, t_image *img);
-void		clear_image(t_image *image);
-void		image_set_pixel(t_image *image, int x, int y, int color);
+t_image		*delete_image(t_mlx *mlx, t_image *img);
+void		reset_image(t_image *image);
+void		put_pixel_in_image(t_image *image, int x, int y, int color);
 
 #endif

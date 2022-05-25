@@ -6,44 +6,42 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 23:31:04 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/25 16:52:33 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/25 18:11:21 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void		find_depth(t_map *map)
+void		map_depth(t_map *map)
 {
 	int			min;
 	int			max;
-	t_vector	v;
-	t_vector	cur;
+	t_vector	vector;
+	t_vector	current;
 
 	min = 0;
 	max = 0;
-	v.y = 0;
-	while (v.y < map->height)
+	vector.y = 0;
+	while (vector.y < map->height)
 	{
-		v.x = 0;
-		while (v.x < map->width)
+		vector.x = 0;
+		while (vector.x < map->width)
 		{
-			//printf("looppi\n");
-			cur = *map->vectors[(int)v.y * map->width + (int)v.x];
-			//printf("%d (%d, %d)\n", cur.z, cur.x, cur.y);
-			if (cur.z < min)
-				min = cur.z;
-			if (cur.z > max)
-				max = cur.z;
-			v.x++;
+			current = *map->vectors[(int)vector.y * map->width + (int)vector.x];
+			if (current.z < min)
+				min = current.z;
+			if (current.z > max)
+				max = current.z;
+			vector.x++;
 		}
-		v.y++;
+		vector.y++;
 	}
 	map->depth_min = min;
 	map->depth_max = max;
 }
 
 //Ei hajuu onks tää mintis
-static int	cleanup(char *save, t_map **map)
+static int	delete_save_and_map(char *save, t_map **map)
 {
 	if (save)
 		save = NULL;
@@ -83,7 +81,7 @@ t_map *vectors_for_map(char *save, t_map *tmp)
 	map = malloc_map(tmp);
 	split_save = ft_strsplit(save, ' ');
 	if (split_save == NULL)
-		cleanup(save, &map);
+		delete_save_and_map(save, &map);
 	while (y < map->height)
 	{
 		x = 0;
@@ -101,6 +99,6 @@ t_map *vectors_for_map(char *save, t_map *tmp)
 		y++;
 	}
 	free(split_save);
-	find_depth(map);
+	map_depth(map);
 	return (map);
 }
