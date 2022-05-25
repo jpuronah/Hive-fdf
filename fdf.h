@@ -21,6 +21,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <X11/keysym.h>
+# include <math.h>
 
 int	scale;
 
@@ -36,9 +37,9 @@ typedef struct		s_cam
 
 typedef struct s_vector
 {
-	int			x;
-	int			y;
-	int			z;
+	double		x;
+	double		y;
+	double		z;
 	int			color;
 }				t_vector;
 

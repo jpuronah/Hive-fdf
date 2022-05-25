@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:27:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/25 16:39:57 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:55:22 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,6 @@ void	free_and_exit(int key, t_mlx *mlx)
 	}
 }
 
-int		exit_with_esc(int key, t_mlx *mlx)
-{
-	(void)mlx;
-
-	if (key == XK_Escape)
-		free_and_exit(key, mlx);
-	return (0);
-}
-
 t_vector	get_vector_for_render(t_map *map, int x, int y)
 {
 	/*printf("(%d, ", map->vectors[y * map->width + x]->x);
@@ -58,17 +49,32 @@ t_vector	get_vector_for_render(t_map *map, int x, int y)
 	return (*map->vectors[y * map->width + x]);
 }
 
+t_vector	rotate(t_vector p, t_cam *r)
+{
+	t_vector	v;
+	double		x;
+	double		y;
+	double		z;
+
+	x = p.x;
+	z = p.z;
+	v.x = cos(r->y) * x + sin(r->y) * z;
+	v.z = -sin(r->y) * x + cos(r->y) * z;
+	y = p.y;
+	z = v.z;
+	v.y = cos(r->x) * y - sin(r->x) * z;
+	v.z = sin(r->x) * y + cos(r->x) * z;
+	v.color = p.color;
+	return (v);
+}
+
 t_vector	project_vector(t_vector v, t_mlx *mlx)
 {
-	//v.x -= (double)(mlx->map->width - 1) / 2.0f;
-	//v.y -= (double)(mlx->map->height - 1) / 2.0f;
-	//printf("proje z: %d\n", v.z);
-
-	v.x -= (mlx->map->width - 1) / 2;
-	v.y -= (mlx->map->height - 1) / 2;
+	v.x -= (double)(mlx->map->width - 1) / 2.0f;
+	v.y -= (double)(mlx->map->height - 1) / 2.0f;
 	v.z -= (double)(mlx->map->depth_min + mlx->map->depth_max) / 2.0f;
 	//printf("proje z: %d\n", v.z);
-	//v = rotate(v, mlx->cam);
+	v = rotate(v, mlx->cam);
 	v.x *= mlx->cam->scale;
 	v.y *= mlx->cam->scale;
 	v.x += mlx->cam->offsetx;
@@ -163,7 +169,47 @@ void	render(t_mlx *mlx)
 		}
 		y++;
 	}
-	mlx_put_image_to_window(mlx->mlxptr, mlx->winptr, mlx->image->image, 0, 30);
+	mlx_put_image_to_window(mlx->mlxptr, mlx->winptr, mlx->image->image, 0, 0);
+}
+
+int		key_event(int key, t_mlx *mlx)
+{
+	(void)mlx;
+	int		i;
+
+	i = 1;
+	printf("%d\n", key);
+	if (key == XK_Escape)
+		free_and_exit(key, mlx);
+	if (ft_isdigit(key) == 1)
+	{
+		if (key == '1')
+			mlx->cam->scale = mlx->cam->scale + 1;
+		if (key == '2')
+			mlx->cam->scale = mlx->cam->scale - 1;
+		//render(mlx);
+		//printf("%d\n", i);
+	}
+	printf("%f, %f\n", mlx->cam->offsetx, mlx->cam->offsety);
+	if (key == 'w')
+		mlx->cam->offsety -= 10;
+	if (key == 'a')
+		mlx->cam->offsetx -= 10;
+	if (key == 's')
+		mlx->cam->offsety += 10;
+	if (key == 'd')
+		mlx->cam->offsetx += 10;
+
+	if (key == 65362)
+		mlx->cam->x += 0.1;
+	if (key == 65361)
+		mlx->cam->y -= 0.1;
+	if (key == 65364)
+		mlx->cam->x -= 0.1;
+	if (key == 65363)
+		mlx->cam->y += 0.1;
+	render(mlx);
+	return (0);
 }
 
 void	graphics(t_map *map, char *window_title)
@@ -173,7 +219,7 @@ void	graphics(t_map *map, char *window_title)
 	mlx = init_mlx(window_title, map);
 	if (mlx == NULL)
 		printf_error ("Error; Cannot initialize mlx");
-	mlx_key_hook(mlx->winptr, exit_with_esc, mlx);
+	mlx_key_hook(mlx->winptr, key_event, mlx);
 	mlx_string_put(mlx->mlxptr, mlx->winptr, 20, 20, WHITE, "Press 'ESC' for EXIT");
 	render(mlx);
 	mlx_loop(mlx->mlxptr);
