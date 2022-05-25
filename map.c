@@ -6,13 +6,14 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 17:02:45 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/25 18:15:31 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/25 18:17:29 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
 //	Todella kyseenalasia juttuja täällä
+//	in English: Very questionable stuff here
 
 t_map	*init_map(void)
 {
