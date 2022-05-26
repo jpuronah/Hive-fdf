@@ -6,12 +6,11 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:12:53 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/25 18:14:04 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:41:14 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
 
 void	put_pixel_in_image(t_image *image, int x, int y, int color)
 {

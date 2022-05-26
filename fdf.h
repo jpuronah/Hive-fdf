@@ -1,12 +1,12 @@
-///* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/19 15:43:12 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/23 16:26:16 by jpuronah         ###   ########.fr       */
+/*   Created: 2022/05/26 11:18:34 by jpuronah          #+#    #+#             */
+/*   Updated: 2022/05/26 14:32:16 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,15 @@ typedef struct s_map
 	t_vector	**vectors;
 }				t_map;
 
+typedef struct		s_mouse
+{
+	char		isdown;
+	int			x;
+	int			y;
+	int			lastx;
+	int			lasty;
+}					t_mouse;
+
 typedef struct s_image
 {
 	void		*image;
@@ -69,6 +78,8 @@ typedef struct s_mlx
 	t_map		*map;
 	t_cam		*cam;
 	t_image		*image;
+	t_mouse		*mouse;
+	int			frame;
 }				t_mlx;
 
 typedef struct s_line
@@ -84,22 +95,38 @@ typedef struct s_line
 }				t_line;
 
 void		printf_error(char *reason);
+void		free_and_exit(int key, t_mlx *mlx);
 
 t_map		*init_map(void);
 t_map		*malloc_map(t_map *tmp);
 void		read_and_save_map(int fd, int scale, char *title);
 void		get_map_parameters(char *line, t_map *map);
+void		map_depth(t_map *map);
+int			delete_save_and_map(char *save, t_map **map);
 
 t_vector	**get_vectors(char *save, t_map *map);
 t_map		*vectors_for_map(char *save, t_map *map);
+t_vector	get_vector_for_render(t_map *map, int x, int y);
+t_vector	project_vector(t_vector v, t_mlx *mlx);
+t_vector	geometry_stuff(t_vector p, t_cam *r);
 
 void		graphics(t_map *map, char *window_title);
+void		render(t_mlx *mlx);
 t_mlx		*malloc_mlx(void);
-t_image		*new_image(t_mlx *mlx);
 
 t_image		*new_image(t_mlx *mlx);
 t_image		*delete_image(t_mlx *mlx, t_image *img);
 void		reset_image(t_image *image);
 void		put_pixel_in_image(t_image *image, int x, int y, int color);
+int			put_background(t_mlx *mlx);
+int			put_object(t_mlx *mlx);
+
+int			key_event(int key, t_mlx *mlx);
+int			hook_mousedown(int button, int x, int y, t_mlx *mlx);
+int			hook_mouseup(int button, int x, int y, t_mlx *mlx);
+int			hook_mousemove(int x, int y, int z, t_mlx *mlx);
+int			mouse_move(int x, int y, int z, t_mlx *mlx);
+
+void		menu(t_mlx *mlx);
 
 #endif
