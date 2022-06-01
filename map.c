@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 17:02:45 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/01 14:29:38 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:29:27 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ static int	get_map_width(char *line)
 	index = 0;
 	len = 0;
 	len = ft_countwords(line, ' ');
-	while (len > 0 && line[index] != '\0' && line[index] != '\n')
+	printf("%zu\n", len);
+	printf("%s\n", line);
+	while (len > 0 && line[index] != '\0')// && line[index] != '\n')
 	{
 		len--;
 		check = 0;
@@ -50,10 +52,13 @@ static int	get_map_width(char *line)
 			check = 1;
 			index++;
 		}
+		//if (line[index] == ' ')
+		//	index++;
 		if (check == 1)
 			width++;
 		index++;
 	}
+	printf("%d\n", width);
 	return (width);
 }
 
@@ -66,7 +71,6 @@ static t_map	*malloc_map(t_map *tmp)
 		return (NULL);
 	map->width = tmp->width;
 	map->height = tmp->height;
-	map->param = tmp->param;
 	map->vectors = NULL;
 	map->vectors = ft_memalloc(sizeof(t_vector) * tmp->width * tmp->height);
 	if (map->vectors == NULL)
@@ -93,7 +97,8 @@ char	*save_fd_to_array(int fd, t_mlx *mlx)
 	while (ret == 1)
 	{
 		mlx->map->height++;
-		mlx->map->width = get_map_width(line);
+		if (mlx->map->width == 0)
+			mlx->map->width = get_map_width(line);
 		save = save_save(save, line);
 		ft_strdel(&line);
 		ret = get_next_line(fd, &line);

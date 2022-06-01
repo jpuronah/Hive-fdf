@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:16:05 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/01 14:35:12 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:43:00 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,6 @@ void	map_depth(t_map *map)
 	}
 	map->depth_min = min;
 	map->depth_max = max;
-}
-
-void	set_char_null(char *str)
-{
-	if (str)
-		free(str);
-	str = NULL;
 }
 
 char	*save_save(char *save, char *line)

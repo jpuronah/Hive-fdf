@@ -6,50 +6,50 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 23:31:04 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/01 14:34:25 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:12:09 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_vector	get_vector_for_render(t_map *map, int x, int y)
+static t_vector	geometry_stuff(t_vector p, t_cam *r)
 {
-	return (*map->vectors[y * map->width + x]);
-}
-
-t_vector	geometry_stuff(t_vector p, t_cam *r)
-{
-	t_vector	v;
+	t_vector	vector;
 	double		x;
 	double		y;
 	double		z;
 
 	x = p.x;
 	z = p.z;
-	v.x = cos(r->y) * x + sin(r->y) * z;
-	v.z = -sin(r->y) * x + cos(r->y) * z;
+	vector.x = cos(r->y) * x + sin(r->y) * z;
+	vector.z = -sin(r->y) * x + cos(r->y) * z;
 	y = p.y;
-	z = v.z;
-	v.y = cos(r->x) * y - sin(r->x) * z;
-	v.z = sin(r->x) * y + cos(r->x) * z;
-	v.color = p.color;
-	return (v);
+	z = vector.z;
+	vector.y = cos(r->x) * y - sin(r->x) * z;
+	vector.z = sin(r->x) * y + cos(r->x) * z;
+	vector.color = p.color;
+	return (vector);
 }
 
-t_vector	project_vector(t_vector v, t_mlx *mlx)
+t_vector	get_vector_for_render(t_map *map, int x, int y)
 {
-	v.x -= (double)(mlx->map->width - 1) / 2.0f;
-	v.y -= (double)(mlx->map->height - 1) / 2.0f;
-	v.z -= (double)(mlx->map->depth_min + mlx->map->depth_max) / 2.0f;
-	v = geometry_stuff(v, mlx->cam);
-	v.x *= mlx->cam->scale;
-	v.y *= mlx->cam->scale;
-	v.x += mlx->cam->offsetx;
-	v.y += mlx->cam->offsety;
-	return (v);
+	return (*map->vectors[y * map->width + x]);
 }
 
-t_vector	*init_vector(int x, int y, char *str)
+t_vector	project_vector(t_vector vector, t_mlx *mlx)
+{
+	vector.x -= (double)(mlx->map->width - 1) / 2.0f;
+	vector.y -= (double)(mlx->map->height - 1) / 2.0f;
+	vector.z -= (double)(mlx->map->depth_min + mlx->map->depth_max) / 2.0f;
+	vector = geometry_stuff(vector, mlx->cam);
+	vector.x *= mlx->cam->scale;
+	vector.y *= mlx->cam->scale;
+	vector.x += mlx->cam->offsetx;
+	vector.y += mlx->cam->offsety;
+	return (vector);
+}
+
+static t_vector	*init_vector(int x, int y, char *str)
 {
 	t_vector	*vector;
 
@@ -71,6 +71,7 @@ t_map	*vectors_for_map(char *save, t_map *map)
 	int			x;
 	int			y;
 
+	//printf("save:%s\n", save);
 	split_save = ft_strsplit(save, ' ');
 	if (split_save == NULL)
 		delete_save_and_map(save, &map);
@@ -80,8 +81,7 @@ t_map	*vectors_for_map(char *save, t_map *map)
 		x = 0;
 		while (x < map->width)
 		{
-			map->vectors[y * map->width + x]
-				= init_vector(x, y, split_save[x + (y * map->width)]);
+			map->vectors[y * map->width + x] = init_vector(x, y, split_save[x + (y * map->width)]);
 			x++;
 		}
 		y++;

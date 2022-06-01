@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:27:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/01 14:44:34 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:32:31 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ t_mlx	*init_mlx(char *win_title, t_map *map)
 	mlx->cam->scale = 32;
 	mlx->cam->offsetx = WIN_WIDTH / 2;
 	mlx->cam->offsety = WIN_HEIGHT / 2;
-	mlx->mouse = ft_memalloc(sizeof(t_mouse));
 	return (mlx);
 }
 
@@ -120,13 +119,20 @@ void	graphics(t_map *map, char *window_title)
 {
 	t_mlx	*mlx;
 
+	/*int i = 0;
+	while (i < map->height * map->width)
+	{
+		printf("%d, ", (int)map->vectors[i++]->z);
+		if (i % map->width == 0)
+			printf("\n");
+	}*/
 	mlx = init_mlx(window_title, map);
 	if (mlx == NULL)
 		print_error ("Error; Cannot initialize mlx");
 	render(mlx);
 	menu(mlx);
 	mlx->frame++;
-	//mlx_key_hook(mlx->winptr, key_event, mlx);
-	mlx_key_hook(mlx->winptr, hook_keydown, mlx);
+	mlx_key_hook(mlx->winptr, key_event, mlx);
+	//mlx_key_hook(mlx->winptr, hook_keydown, mlx);
 	mlx_loop(mlx->mlxptr);
 }

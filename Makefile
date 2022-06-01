@@ -6,14 +6,14 @@
 #    By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/19 15:44:35 by jpuronah          #+#    #+#              #
-#    Updated: 2022/06/01 13:54:20 by jpuronah         ###   ########.fr        #
+#    Updated: 2022/06/01 15:01:51 by jpuronah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
-SOURCES = main.c map.c vectors.c graphics.c image.c keys_and_mouse.c utilities.c map_utility.c
+SOURCES = main.c map.c vectors.c graphics.c image.c keyboard.c utilities.c map_utility.c
 INCLUDES = fdf.h
-FLAGS = -Wall -Wextra -Werror 
+FLAGS = -Wall -Wextra -Werror
 LINKS = -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext
 LIBFT = libft/libft.a
 
@@ -21,8 +21,6 @@ all: lib $(NAME)
 
 lib:
 	make -C ./libft/
-
-#make libft:lle oma homma
 
 $(NAME):
 	gcc $(FLAGS) -o $(NAME) $(LINKS) $(SOURCES) $(LIBFT)

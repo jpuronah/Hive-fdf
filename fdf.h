@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:18:34 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/01 14:45:38 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:01:27 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,10 @@ typedef struct s_map
 {
 	int			width;
 	int			height;
-	int			param;
 	int			depth_min;
 	int			depth_max;
 	t_vector	**vectors;
 }				t_map;
-
-typedef struct s_mouse
-{
-	char		isdown;
-	int			x;
-	int			y;
-	int			lastx;
-	int			lasty;
-}					t_mouse;
 
 typedef struct s_image
 {
@@ -76,7 +66,6 @@ typedef struct s_mlx
 	t_map		*map;
 	t_cam		*cam;
 	t_image		*image;
-	t_mouse		*mouse;
 	int			frame;
 }				t_mlx;
 
@@ -95,12 +84,8 @@ typedef struct s_line
 void		print_error(char *reason);
 void		free_and_exit(int key, t_mlx *mlx);
 
-//static t_map		*init_map(void);
-//static t_map		*malloc_map(t_map *tmp);
-//void		read_and_save_map(int fd, char *title);
 void		read_and_save_map(int fd, t_mlx *mlx);
 char		*save_save(char *save, char *line);
-void		get_map_parameters(char *line, t_map *map);
 void		map_depth(t_map *map);
 int			delete_save_and_map(char *save, t_map **map);
 
@@ -108,7 +93,6 @@ t_vector	**get_vectors(char *save, t_map *map);
 t_map		*vectors_for_map(char *save, t_map *map);
 t_vector	get_vector_for_render(t_map *map, int x, int y);
 t_vector	project_vector(t_vector v, t_mlx *mlx);
-t_vector	geometry_stuff(t_vector p, t_cam *r);
 
 void		graphics(t_map *map, char *window_title);
 void		render(t_mlx *mlx);
@@ -118,15 +102,9 @@ t_image		*new_image(t_mlx *mlx);
 t_image		*delete_image(t_mlx *mlx, t_image *img);
 void		reset_image(t_image *image);
 void		put_pixel_in_image(t_image *image, int x, int y, int color);
-int			put_background(t_mlx *mlx);
-int			put_object(t_mlx *mlx);
 
 int			key_event(int key, t_mlx *mlx);
 int			hook_keydown(int key, t_mlx *mlx);
-int			hook_mousedown(int button, int x, int y, t_mlx *mlx);
-int			hook_mouseup(int button, int x, int y, t_mlx *mlx);
-int			hook_mousemove(int x, int y, int z, t_mlx *mlx);
-int			mouse_move(int x, int y, int z, t_mlx *mlx);
 
 void		menu(t_mlx *mlx);
 
