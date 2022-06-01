@@ -2,6 +2,6 @@
 
 Hive Helsinki project
 
-Visualizing a 2D map using MiniLibX and my own C library.
+Visualizing a 3D map using MiniLibX and my own C library.
 
 a work in progress ...
