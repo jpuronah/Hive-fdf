@@ -6,13 +6,13 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:16:05 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/26 11:16:37 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/01 14:35:12 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void		map_depth(t_map *map)
+void	map_depth(t_map *map)
 {
 	int			min;
 	int			max;
@@ -40,8 +40,44 @@ void		map_depth(t_map *map)
 	map->depth_max = max;
 }
 
+void	set_char_null(char *str)
+{
+	if (str)
+		free(str);
+	str = NULL;
+}
+
+char	*save_save(char *save, char *line)
+{
+	char		*tmp;
+	char		*tmp2;
+
+	tmp = NULL;
+	tmp2 = NULL;
+	tmp = ft_strdup(line);
+	if (tmp == NULL)
+		return (NULL);
+	if (save == NULL)
+	{
+		save = ft_strjoin(tmp, " ");
+		ft_strdel(&tmp);
+	}
+	else
+	{
+		tmp2 = save;
+		save = ft_strjoin(tmp2, tmp);
+		ft_strdel(&tmp);
+		ft_strdel(&tmp2);
+		tmp2 = save;
+		save = ft_strjoin(tmp2, " ");
+		ft_strdel(&tmp);
+		ft_strdel(&tmp2);
+	}
+	return (save);
+}
+
 //Ei hajuu onks tää mintis
-int		delete_save_and_map(char *save, t_map **map)
+int	delete_save_and_map(char *save, t_map **map)
 {
 	if (save)
 		save = NULL;

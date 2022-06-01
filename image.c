@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:12:53 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/26 13:41:14 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/01 14:40:08 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 void	put_pixel_in_image(t_image *image, int x, int y, int color)
 {
 	if (x < 0 || x >= WIN_WIDTH || y < 0 || y >= WIN_HEIGHT)
-	{
 		return ;
-	}
 	*(image->ptr + ((x + y * WIN_WIDTH) * image->bpp)) = color;
 }
 
@@ -41,9 +39,11 @@ t_image	*new_image(t_mlx *mlx)
 {
 	t_image		*img;
 
-	if ((img = ft_memalloc(sizeof(t_image))) == NULL)
+	img = ft_memalloc(sizeof(t_image));
+	if (img == NULL)
 		return (NULL);
-	if ((img->image = mlx_new_image(mlx->mlxptr, WIN_WIDTH, WIN_HEIGHT)) == NULL)
+	img->image = mlx_new_image(mlx->mlxptr, WIN_WIDTH, WIN_HEIGHT);
+	if (img->image == NULL)
 		return (delete_image(mlx, img));
 	img->ptr = mlx_get_data_addr(img->image, &img->bpp, &img->line_bytes,
 			&img->endian);

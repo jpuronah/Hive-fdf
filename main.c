@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:43:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/01 11:37:31 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/01 14:36:02 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,16 @@ t_mlx	*init_mlx2(void)
 
 int	main(int ac, char **av)
 {
+	t_mlx		*mlx;
 	int			fd;
-	t_mlx	*mlx;
 
 	mlx = init_mlx2();
 	fd = open(av[1], O_RDONLY);
 	if (ac == 2 && fd > 0)
-		read_and_save_map(fd, av[1], mlx);
+		read_and_save_map(fd, mlx);
 	else
 		print_error("error: wrong number of arguments");
+	close(fd);
+	graphics(mlx->map, av[1]);
 	return (0);
 }

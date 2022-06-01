@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:18:34 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/01 11:34:39 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/01 14:45:38 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@
 # include <X11/keysym.h>
 # include <math.h>
 
-int	scale;
-
-typedef struct		s_cam
+typedef struct s_cam
 {
 	double		offsetx;
 	double		offsety;
@@ -53,7 +51,7 @@ typedef struct s_map
 	t_vector	**vectors;
 }				t_map;
 
-typedef struct		s_mouse
+typedef struct s_mouse
 {
 	char		isdown;
 	int			x;
@@ -97,10 +95,11 @@ typedef struct s_line
 void		print_error(char *reason);
 void		free_and_exit(int key, t_mlx *mlx);
 
-t_map		*init_map(void);
-t_map		*malloc_map(t_map *tmp);
+//static t_map		*init_map(void);
+//static t_map		*malloc_map(t_map *tmp);
 //void		read_and_save_map(int fd, char *title);
-void	read_and_save_map(int fd, char *title, t_mlx *mlx);
+void		read_and_save_map(int fd, t_mlx *mlx);
+char		*save_save(char *save, char *line);
 void		get_map_parameters(char *line, t_map *map);
 void		map_depth(t_map *map);
 int			delete_save_and_map(char *save, t_map **map);
@@ -123,6 +122,7 @@ int			put_background(t_mlx *mlx);
 int			put_object(t_mlx *mlx);
 
 int			key_event(int key, t_mlx *mlx);
+int			hook_keydown(int key, t_mlx *mlx);
 int			hook_mousedown(int button, int x, int y, t_mlx *mlx);
 int			hook_mouseup(int button, int x, int y, t_mlx *mlx);
 int			hook_mousemove(int x, int y, int z, t_mlx *mlx);
