@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 17:02:45 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/01 16:29:27 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/01 18:39:09 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ static int	get_map_width(char *line)
 	index = 0;
 	len = 0;
 	len = ft_countwords(line, ' ');
-	printf("%zu\n", len);
-	printf("%s\n", line);
 	while (len > 0 && line[index] != '\0')// && line[index] != '\n')
 	{
 		len--;
@@ -58,7 +56,6 @@ static int	get_map_width(char *line)
 			width++;
 		index++;
 	}
-	printf("%d\n", width);
 	return (width);
 }
 

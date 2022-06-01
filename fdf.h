@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:18:34 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/01 16:01:27 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/01 18:44:47 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # include <mlx.h>
 # include "libft/libft.h"
 # include <fcntl.h>
-# include <stdio.h>
-# include <X11/keysym.h>
 # include <math.h>
+//# include <stdio.h>
+//# include <X11/keysym.h>
 
 typedef struct s_cam
 {
@@ -31,7 +31,7 @@ typedef struct s_cam
 	double		y;
 	int			scale;
 	double		**matrix;
-}					t_cam;
+}				t_cam;
 
 typedef struct s_vector
 {
@@ -82,7 +82,7 @@ typedef struct s_line
 }				t_line;
 
 void		print_error(char *reason);
-void		free_and_exit(int key, t_mlx *mlx);
+//void		free_and_exit(int key, t_mlx *mlx);
 
 void		read_and_save_map(int fd, t_mlx *mlx);
 char		*save_save(char *save, char *line);
@@ -104,8 +104,6 @@ void		reset_image(t_image *image);
 void		put_pixel_in_image(t_image *image, int x, int y, int color);
 
 int			key_event(int key, t_mlx *mlx);
-int			hook_keydown(int key, t_mlx *mlx);
-
 void		menu(t_mlx *mlx);
 
 #endif

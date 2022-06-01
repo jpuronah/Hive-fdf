@@ -6,17 +6,50 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:12:21 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/01 16:03:34 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/01 18:52:50 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	hook_keydown(int key, t_mlx *mlx)
+void	menu(t_mlx *mlx)
 {
-	(void)mlx;
+	mlx_string_put(mlx->mlxptr, mlx->winptr, 20, 20,
+		WHITE, "Press 'ESC' for EXIT");
+	mlx_string_put(mlx->mlxptr, mlx->winptr, 20, 40,
+		WHITE, "Move: 'WASD' / 'wasd'");
+	mlx_string_put(mlx->mlxptr, mlx->winptr, 20, 60,
+		WHITE, "Zoom: '+' & '-'");
+	mlx_string_put(mlx->mlxptr, mlx->winptr, 20, 80,
+		WHITE, "Rotate: ARROW KEYS");
+}
+
+int	key_event(int key, t_mlx *mlx)
+{
 	if (key == 65307)
 		exit(EXIT_SUCCESS);
+	if (key == '+')
+		mlx->cam->scale = mlx->cam->scale + 1;
+	if (key == '-')
+		mlx->cam->scale = mlx->cam->scale - 1;
+	if (key == 'w')
+		mlx->cam->offsety -= 10;
+	if (key == 'a')
+		mlx->cam->offsetx -= 10;
+	if (key == 's')
+		mlx->cam->offsety += 10;
+	if (key == 'd')
+		mlx->cam->offsetx += 10;
+	if (key == 65362)
+		mlx->cam->x += 0.1;
+	if (key == 65361)
+		mlx->cam->y -= 0.1;
+	if (key == 65364)
+		mlx->cam->x -= 0.1;
+	if (key == 65363)
+		mlx->cam->y += 0.1;
+	render(mlx);
+	menu(mlx);
 	return (0);
 }
 
@@ -68,6 +101,7 @@ int		key_event(int key, t_mlx *mlx)
 	return (0);
 }*/
 
+/*
 int	key_event(int key, t_mlx *mlx)
 {
 	if (key == 65307)
@@ -101,3 +135,4 @@ int	key_event(int key, t_mlx *mlx)
 	menu(mlx);
 	return (0);
 }
+*/

@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:43:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/01 16:23:30 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/01 18:38:45 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	main(int ac, char **av)
 	else
 		print_error("error: wrong number of arguments");
 	close(fd);
-	printf("%d\n", mlx->map->width);
 	graphics(mlx->map, av[1]);
 	return (0);
 }
