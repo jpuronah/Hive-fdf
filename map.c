@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 17:02:45 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/25 18:17:29 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/01 12:26:21 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,47 +28,33 @@ t_map	*init_map(void)
 	return (map);
 }
 
-static void	get_map_width(char *line, t_map *map)
+static int	get_map_width(char *line)
 {
 	int		width;
-	int		space;
+	int		check;
+	int		index;
+	size_t	len;
 
 	width = 0;
-	space = 0;
-	map->height++;
-	while (*line != '\0' && *line != '\n')
+	index = 0;
+	len = 0;
+	len = ft_countwords(line, ' ');
+	while (len > 0 && line[index] != '\0' && line[index] != '\n')
 	{
-		if ((*line >= '0' && *line <= '9'))
+		len--;
+		check = 0;
+		if (line[index] == '-')
+			index++;
+		while ((line[index] >= '0' && line[index] <= '9'))
+		{
+			check = 1;
+			index++;
+		}
+		if (check == 1)
 			width++;
-		else if (*line == ' ')
-			space++;
-		else if ((*line != 0 && *line != '\n'))
-			printf_error("error: inputfile character error");
-		line++;
+		index++;
 	}
-	//if (map->width > 0)
-	//	if (map->width != width || space != width - 1)
-	//		printf_error("error: inputfile width error");
-	map->width = width;
-}
-
-static char	*save_save(char *save, char *line)
-{
-	char	*tmp;
-	char	*tmp2;
-
-	tmp = NULL;
-	tmp2 = NULL;
-	if (save && line)
-		tmp = ft_strjoin(save, line);
-	else
-		tmp = ft_strdup(line);
-	tmp2 = ft_strjoin(tmp, " ");
-	if (tmp)
-		free(tmp);
-	free(save);
-	free(line);
-	return (tmp2);
+	return (width);
 }
 
 t_map	*malloc_map(t_map *tmp)
@@ -95,29 +81,64 @@ t_map	*malloc_map(t_map *tmp)
 	return (map);
 }
 
-void	read_and_save_map(int fd, int scale, char *title)
+char	*save_fd_to_array(int fd, t_mlx *mlx)
 {
 	int			ret;
 	char		*line;
 	char		*save;
 	char		*tmp;
-	t_map		*map;
+	char		*tmp2;
 
 	tmp = NULL;
 	save = NULL;
-	map = init_map();
-	map->param = scale;
+	mlx->map = init_map();
 	ret = get_next_line(fd, &line);
 	while (ret == 1)
 	{
-		get_map_width(line, map);
-		tmp = save_save(save, line);
-		save = (char *)malloc(sizeof(char) * (map->height * map->width + 1));
-		save = ft_strdup(tmp);
-		free(tmp);
+		mlx->map->height++;
+		mlx->map->width = get_map_width(line);
+		tmp = ft_strdup(line);
+		if (tmp == NULL)
+			return (NULL);
+		if (save == NULL)
+		{
+			save = ft_strjoin(tmp, " ");
+			free(tmp);
+			tmp = NULL;
+		}
+		else
+		{
+			tmp2 = save;
+			save = ft_strjoin(tmp2, tmp);
+			free(tmp);
+			tmp = NULL;
+			free(tmp2);
+			tmp2 = NULL;
+			tmp2 = save;
+			save = ft_strjoin(tmp2, " ");
+			free(tmp2);
+			tmp2 = NULL;
+		}
+		ft_strdel(&line);
 		ret = get_next_line(fd, &line);
 	}
-	map = malloc_map(map);
-	map = vectors_for_map(save, map);
-	graphics(map, title);
+	//printf("%s\n", save);
+	free(line);
+	//exit(EXIT_SUCCESS);
+	return (save);
+}
+
+void	read_and_save_map(int fd, char *title, t_mlx *mlx)
+{
+	char	*map_array;
+
+	map_array = save_fd_to_array(fd, mlx);
+	//check_map_array(map_array, mlx);
+	//mlx->map = malloc_map2(map_array);
+	mlx->map = malloc_map(mlx->map);
+	mlx->map = vectors_for_map(map_array, mlx->map);
+	graphics(mlx->map, title);
+	printf("%s\n", title);
+	close(fd);
+	exit(EXIT_SUCCESS);
 }

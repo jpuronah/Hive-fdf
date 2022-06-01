@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 23:31:04 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/26 11:15:50 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/01 12:05:58 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,36 @@ t_vector	*init_vector(int x, int y, char *str)
 		return (NULL);
 	vector->x = x;
 	vector->y = y;
-	vector->z = ft_atoi(str);
+	//printf("str: %s\n", str);
+	if (str != NULL)
+		vector->z = ft_atoi(str);
+	//printf("z: %f\n", vector->z);
 	vector->color = 0;
 	//vector->color = 0xFFFFFF;
 	return (vector);
 }
 
-t_map *vectors_for_map(char *save, t_map *tmp)
+t_map *vectors_for_map(char *save, t_map *map)
 {
 	char		**split_save;
 	int			x;
 	int			y;
-	t_map		*map;
+	//t_map		*map;
 
+	//printf("%s\n", save);
+	//printf("%d\n", map->width);
 	y = 0;
-	map = malloc_map(tmp);
+	//map = malloc_map(tmp);
 	split_save = ft_strsplit(save, ' ');
 	if (split_save == NULL)
 		delete_save_and_map(save, &map);
+	y = 0;
+	while (split_save[y])
+	{
+		//printf("split[%d]: %s\n", y, split_save[y]);
+		y++;
+	}
+	y = 0;
 	while (y < map->height)
 	{
 		x = 0;
@@ -89,16 +101,19 @@ t_map *vectors_for_map(char *save, t_map *tmp)
 		{
 			map->vectors[y * map->width + x] = init_vector(x, y, split_save[x + (y * map->width)]);
 			x++;
+			//printf("x: %d, width: %d\n", x, map->width);
 		}
 		y++;
 	}
 	y = 0;
 	while (split_save[y])
 	{
+		printf("split: %s\n", split_save[y]);
 		free(split_save[y]);
 		y++;
 	}
 	free(split_save);
 	map_depth(map);
+	//exit(EXIT_SUCCESS);
 	return (map);
 }

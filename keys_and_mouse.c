@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:12:21 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/26 14:40:55 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/05/27 11:23:48 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int		hook_mousemove(int x, int y, int z, t_mlx *mlx)
 	mlx->mouse->lasty = mlx->mouse->y;
 	mlx->mouse->x = x;
 	mlx->mouse->y = y;
+	mlx->mouse->x = x - z + z;
 	if (mlx->mouse->isdown & (1 << 1) && mlx->mouse->isdown & (1 << 2))
 	{
 		mlx->cam->offsetx += (x - mlx->mouse->lastx);

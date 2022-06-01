@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:27:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/26 17:14:43 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/01 12:32:54 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ t_mlx	*init_mlx(char *win_title, t_map *map)
 	mlx->mouse = ft_memalloc(sizeof(t_mouse));
 	//free(map->vectors);
 	//free(map);
-	
 	return (mlx);
 }
 
@@ -118,17 +117,26 @@ void	render(t_mlx *mlx)
 	mlx_put_image_to_window(mlx->mlxptr, mlx->winptr, mlx->image->image, 0, 0);
 }
 
+int		hook_keydown(int key, t_mlx *mlx)
+{
+	(void)mlx;
+	if (key == 65307)
+		exit(EXIT_SUCCESS);
+	return (0);
+}
+
 void	graphics(t_map *map, char *window_title)
 {
 	t_mlx	*mlx;
 
 	mlx = init_mlx(window_title, map);
 	if (mlx == NULL)
-		printf_error ("Error; Cannot initialize mlx");
+		print_error ("Error; Cannot initialize mlx");
 	render(mlx);
 	menu(mlx);
 	mlx->frame++;
-	mlx_key_hook(mlx->winptr, key_event, mlx);
+	//mlx_key_hook(mlx->winptr, key_event, mlx);
+	mlx_key_hook(mlx->winptr, hook_keydown, mlx);
 	//mlx_mouse_hook(mlx->winptr, mouse_move, mlx);
 	//mlx_hook(mlx->winptr, 5, 0, mouse_move, mlx);
 	//mlx_mouse_hook(mlx->winptr, hook_mousedown, mlx);

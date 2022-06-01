@@ -6,14 +6,14 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:18:34 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/05/26 14:32:16 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/01 11:34:39 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
-# define WIN_WIDTH 720
-# define WIN_HEIGHT 360
+# define WIN_WIDTH 1280
+# define WIN_HEIGHT 720
 # define WHITE 0xFFFFFF
 
 # include <mlx.h>
@@ -94,12 +94,13 @@ typedef struct s_line
 	int			err2;
 }				t_line;
 
-void		printf_error(char *reason);
+void		print_error(char *reason);
 void		free_and_exit(int key, t_mlx *mlx);
 
 t_map		*init_map(void);
 t_map		*malloc_map(t_map *tmp);
-void		read_and_save_map(int fd, int scale, char *title);
+//void		read_and_save_map(int fd, char *title);
+void	read_and_save_map(int fd, char *title, t_mlx *mlx);
 void		get_map_parameters(char *line, t_map *map);
 void		map_depth(t_map *map);
 int			delete_save_and_map(char *save, t_map **map);
