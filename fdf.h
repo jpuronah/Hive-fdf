@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:18:34 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/02 09:52:26 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/02 12:54:23 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include "libft/libft.h"
 # include <fcntl.h>
 # include <math.h>
-//# include <stdio.h>
+# include <stdio.h>
 //# include <X11/keysym.h>
 
 typedef struct s_cam
@@ -30,7 +30,6 @@ typedef struct s_cam
 	double		x;
 	double		y;
 	int			scale;
-	double		**matrix;
 }				t_cam;
 
 typedef struct s_vector
@@ -80,10 +79,8 @@ typedef struct s_line
 	int			err2;
 }				t_line;
 
-void		print_error(char *reason);
-//void		free_and_exit(int key, t_mlx *mlx);
-
 void		read_and_save_map(int fd, t_mlx *mlx);
+
 char		*save_save(char *save, char *line);
 void		map_depth(t_map *map);
 int			delete_save_and_map(char *save, t_map **map);
@@ -95,7 +92,6 @@ t_vector	project_vector(t_vector v, t_mlx *mlx);
 
 void		graphics(t_map *map, char *window_title);
 void		render(t_mlx *mlx);
-t_mlx		*malloc_mlx(void);
 
 t_image		*new_image(t_mlx *mlx);
 t_image		*delete_image(t_mlx *mlx, t_image *img);
@@ -104,5 +100,6 @@ void		put_pixel_in_image(t_image *image, int x, int y, int color);
 
 int			key_event(int key, t_mlx *mlx);
 void		menu(t_mlx *mlx);
+void		print_error(char *reason);
 
 #endif

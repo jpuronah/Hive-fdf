@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:16:05 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/02 09:40:58 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/02 12:49:52 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ char	*save_save(char *save, char *line)
 	return (save);
 }
 
-//Ei hajuu onks tää mintis
 int	delete_save_and_map(char *save, t_map **map)
 {
 	if (save)

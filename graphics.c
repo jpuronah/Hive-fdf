@@ -6,15 +6,13 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:27:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/02 09:56:11 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/02 12:57:08 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <math.h>
-#include <stdio.h>
 
-t_mlx	*init_mlx(char *win_title, t_map *map)
+static t_mlx	*malloc_mlx(char *win_title, t_map *map)
 {
 	t_mlx	*mlx;
 
@@ -26,9 +24,12 @@ t_mlx	*init_mlx(char *win_title, t_map *map)
 	mlx->image = new_image(mlx);
 	mlx->map = map;
 	mlx->cam = ft_memalloc(sizeof(t_cam));
+	if (mlx->image == NULL || mlx->cam == NULL || mlx->map == NULL
+		|| mlx->mlxptr == NULL || mlx->winptr == NULL)
+		return (NULL);
 	mlx->cam->x = 0.5;
 	mlx->cam->y = 0.5;
-	mlx->cam->scale = 32;
+	mlx->cam->scale = 4;
 	mlx->cam->offsetx = WIN_WIDTH / 2;
 	mlx->cam->offsety = WIN_HEIGHT / 2;
 	return (mlx);
@@ -37,6 +38,7 @@ t_mlx	*init_mlx(char *win_title, t_map *map)
 static int	init_line(t_mlx *mlx, t_line *line,
 	t_vector *vector1, t_vector *vector2)
 {
+	printf("err: %d\n\n", line->err);
 	if (vector1->x < 0 || vector1->x >= WIN_WIDTH || vector1->y < 0
 		|| vector1->y >= WIN_HEIGHT || vector2->x < 0 || vector2->x >= WIN_WIDTH
 		|| vector2->y < 0 || vector2->y >= WIN_HEIGHT)
@@ -56,8 +58,6 @@ static int	init_line(t_mlx *mlx, t_line *line,
 	return (0);
 }
 
-/* if joku menee mäpist ulos nii return nolla */
-//lol
 static void	draw(t_mlx *mlx, t_vector vector1, t_vector vector2)
 {
 	t_line	line;
@@ -87,8 +87,16 @@ static void	draw(t_mlx *mlx, t_vector vector1, t_vector vector2)
 		line.err = -line.delta_y / 2;
 	while ((int)vector1.x != (int)vector2.x || (int)vector1.y != (int)vector2.y)
 	{
+		printf("vector1: (%d, %d) %f\n", (int)vector1.x, (int)vector1.y, vector1.z);
+		printf("vector2: (%d, %d) %f\n", (int)vector2.x, (int)vector2.y, vector2.z);
 		if (init_line(mlx, &line, &vector1, &vector2))
 			break ;
+	}
+	if ((int)vector1.x == (int)vector2.x && (int)vector1.y == (int)vector2.y)
+	{
+		printf("if vector1: (%d, %d) %f\n", (int)vector1.x, (int)vector1.y, vector1.z);
+		printf("if vector2: (%d, %d) %f\n", (int)vector2.x, (int)vector2.y, vector2.z);
+		init_line(mlx, &line, &vector1, &vector2);
 	}
 }
 
@@ -98,6 +106,7 @@ void	render(t_mlx *mlx)
 	int			y;
 	t_vector	vector;
 
+	mlx_clear_window(mlx->mlxptr, mlx->winptr);
 	reset_image(mlx->image);
 	y = 0;
 	while (y < mlx->map->height)
@@ -123,7 +132,7 @@ void	graphics(t_map *map, char *window_title)
 {
 	t_mlx	*mlx;
 
-	mlx = init_mlx(window_title, map);
+	mlx = malloc_mlx(window_title, map);
 	if (mlx == NULL)
 		print_error ("Error; Cannot initialize mlx");
 	render(mlx);

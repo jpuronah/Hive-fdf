@@ -6,12 +6,12 @@
 #    By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/19 15:44:35 by jpuronah          #+#    #+#              #
-#    Updated: 2022/06/02 09:37:44 by jpuronah         ###   ########.fr        #
+#    Updated: 2022/06/02 12:46:30 by jpuronah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
-SOURCES = main.c map.c vectors.c graphics.c image.c keyboard.c map_utility.c
+SOURCES = main.c read_and_save_map.c vectors.c graphics.c image.c keyboard.c map_utility.c
 INCLUDES = fdf.h
 FLAGS = -Wconversion -Wall -Wextra -Werror
 LINKS = -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext

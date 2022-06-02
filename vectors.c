@@ -6,11 +6,12 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 23:31:04 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/02 09:06:21 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/02 12:29:01 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <stdio.h>
 
 static t_vector	geometry_stuff(t_vector p, t_cam *r)
 {
@@ -38,9 +39,11 @@ t_vector	get_vector_for_render(t_map *map, int x, int y)
 
 t_vector	project_vector(t_vector vector, t_mlx *mlx)
 {
+	printf("(%d, %d) %f\n", (int)vector.x, (int)vector.y, vector.z);
 	vector.x -= (double)(mlx->map->width - 1) / 2.0f;
 	vector.y -= (double)(mlx->map->height - 1) / 2.0f;
 	vector.z -= (double)(mlx->map->depth_min + mlx->map->depth_max) / 2.0f;
+	printf("(%d, %d) %f\n", (int)vector.x, (int)vector.y, vector.z);
 	vector = geometry_stuff(vector, mlx->cam);
 	vector.x *= mlx->cam->scale;
 	vector.y *= mlx->cam->scale;

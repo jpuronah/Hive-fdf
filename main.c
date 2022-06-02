@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:43:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/02 09:52:40 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/02 12:51:59 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_error(char *reason)
 	exit(EXIT_FAILURE);
 }
 
-t_mlx	*init_mlx2(void)
+static t_mlx	*init_mlx(void)
 {
 	t_mlx	*mlx;
 
@@ -36,7 +36,7 @@ int	main(int ac, char **av)
 	t_mlx		*mlx;
 	int			fd;
 
-	mlx = init_mlx2();
+	mlx = init_mlx();
 	fd = open(av[1], O_RDONLY);
 	if (ac == 2 && fd > 0)
 		read_and_save_map(fd, mlx);

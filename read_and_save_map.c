@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   read_and_save_map.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 17:02:45 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/02 09:41:48 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/02 12:50:46 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static t_map	*malloc_map(t_map *tmp)
 	return (map);
 }
 
-char	*save_fd_to_array(int fd, t_mlx *mlx)
+static char	*save_fd_to_array(int fd, t_mlx *mlx)
 {
 	int			ret;
 	char		*line;

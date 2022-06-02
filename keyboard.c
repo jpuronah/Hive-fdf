@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:12:21 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/01 18:52:50 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/02 12:42:28 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	menu(t_mlx *mlx)
 {
 	mlx_string_put(mlx->mlxptr, mlx->winptr, 20, 20,
-		WHITE, "Press 'ESC' for EXIT");
+		WHITE, "Press 'ESC' to EXIT PROGRAM");
 	mlx_string_put(mlx->mlxptr, mlx->winptr, 20, 40,
 		WHITE, "Move: 'WASD' / 'wasd'");
 	mlx_string_put(mlx->mlxptr, mlx->winptr, 20, 60,
@@ -24,10 +24,17 @@ void	menu(t_mlx *mlx)
 		WHITE, "Rotate: ARROW KEYS");
 }
 
+static int	exit_fdf(t_mlx *mlx)
+{
+	delete_image(mlx, mlx->image);
+	mlx_destroy_window(mlx->mlxptr, mlx->winptr);
+	exit (EXIT_SUCCESS);
+}
+
 int	key_event(int key, t_mlx *mlx)
 {
 	if (key == 65307)
-		exit(EXIT_SUCCESS);
+		exit_fdf(mlx);
 	if (key == '+')
 		mlx->cam->scale = mlx->cam->scale + 1;
 	if (key == '-')
