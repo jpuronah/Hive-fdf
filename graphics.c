@@ -6,12 +6,13 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:27:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/01 18:42:46 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/02 09:56:11 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <math.h>
+#include <stdio.h>
 
 t_mlx	*init_mlx(char *win_title, t_map *map)
 {
@@ -20,7 +21,6 @@ t_mlx	*init_mlx(char *win_title, t_map *map)
 	mlx = ft_memalloc(sizeof(t_mlx));
 	if (!mlx)
 		return (NULL);
-	mlx->frame = 0;
 	mlx->mlxptr = mlx_init();
 	mlx->winptr = mlx_new_window(mlx->mlxptr, WIN_WIDTH, WIN_HEIGHT, win_title);
 	mlx->image = new_image(mlx);
@@ -62,19 +62,30 @@ static void	draw(t_mlx *mlx, t_vector vector1, t_vector vector2)
 {
 	t_line	line;
 
-	vector1.x = (int)vector1.x;
+	/*vector1.x = (int)vector1.x;
 	vector2.x = (int)vector2.x;
 	vector1.y = (int)vector1.y;
-	vector2.y = (int)vector2.y;
+	vector2.y = (int)vector2.y;*/
 	line.start = vector1;
 	line.stop = vector2;
 	line.delta_x = (int)ft_abs((int)vector2.x - (int)vector1.x);
-	line.sx = (int)vector1.x < (int)vector2.x ? 1 : -1;
+	//line.sx = (int)vector1.x < (int)vector2.x ? 1 : -1;
+	if ((int)vector1.x < (int)vector2.x)
+		line.sx = 1;
+	else
+		line.sx = -1;
 	line.delta_y = (int)ft_abs((int)vector2.y - (int)vector1.y);
-	line.sy = (int)vector1.y < (int)vector2.y ? 1 : -1;
-	line.err = (line.delta_x > line.delta_y ? line.delta_x : -line.delta_y) / 2;
-	mlx->frame += 1;
-	while (((int)vector1.x != (int)vector2.x || (int)vector1.y != (int)vector2.y))
+	//line.sy = (int)vector1.y < (int)vector2.y ? 1 : -1;
+	if ((int)vector1.y < (int)vector2.y)
+		line.sy = 1;
+	else
+		line.sy = -1;
+	//line.err = (line.delta_x > line.delta_y ? line.delta_x : -line.delta_y) / 2;
+	if (line.delta_x > line.delta_y)
+		line.err = line.delta_x / 2;
+	else
+		line.err = -line.delta_y / 2;
+	while ((int)vector1.x != (int)vector2.x || (int)vector1.y != (int)vector2.y)
 	{
 		if (init_line(mlx, &line, &vector1, &vector2))
 			break ;
@@ -96,9 +107,11 @@ void	render(t_mlx *mlx)
 		{
 			vector = project_vector(get_vector_for_render(mlx->map, x, y), mlx);
 			if (x + 1 < mlx->map->width)
-				draw(mlx, vector, project_vector(get_vector_for_render(mlx->map, x + 1, y), mlx));
+				draw(mlx, vector, project_vector
+					(get_vector_for_render(mlx->map, x + 1, y), mlx));
 			if (y + 1 < mlx->map->height)
-				draw(mlx, vector, project_vector(get_vector_for_render(mlx->map, x, y + 1), mlx));
+				draw(mlx, vector, project_vector
+					(get_vector_for_render(mlx->map, x, y + 1), mlx));
 			x++;
 		}
 		y++;
@@ -115,7 +128,6 @@ void	graphics(t_map *map, char *window_title)
 		print_error ("Error; Cannot initialize mlx");
 	render(mlx);
 	menu(mlx);
-	mlx->frame++;
 	mlx_key_hook(mlx->winptr, key_event, mlx);
 	mlx_loop(mlx->mlxptr);
 }

@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:18:34 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/01 18:44:47 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/02 09:52:26 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ typedef struct s_mlx
 	t_map		*map;
 	t_cam		*cam;
 	t_image		*image;
-	int			frame;
 }				t_mlx;
 
 typedef struct s_line

@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:43:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/01 18:38:45 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/02 09:52:40 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_mlx	*init_mlx2(void)
 	mlx->map = NULL;
 	mlx->cam = NULL;
 	mlx->image = NULL;
-	mlx->frame = 0;
 	return (mlx);
 }
 

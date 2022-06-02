@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:12:53 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/01 18:51:36 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/02 09:40:18 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 void	put_pixel_in_image(t_image *image, int x, int y, int color)
 {
+	char	*pixel;
+
 	if (x < 0 || x >= WIN_WIDTH || y < 0 || y >= WIN_HEIGHT)
 		return ;
-	*(image->ptr + ((x + y * WIN_WIDTH) * image->bpp)) = color;
+	pixel = image->ptr + (y * image->line_bytes + x * (image->bpp));
+	*(int *)pixel = color;
 }
 
 void	reset_image(t_image *image)
 {
-	ft_bzero(image->ptr, WIN_WIDTH * WIN_HEIGHT * image->bpp);
+	ft_bzero(image->ptr, (size_t)(WIN_WIDTH * WIN_HEIGHT * image->bpp));
 }
 
 t_image	*delete_image(t_mlx *mlx, t_image *img)

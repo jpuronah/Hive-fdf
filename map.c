@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 17:02:45 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/01 18:39:09 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/02 09:41:48 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@ static int	get_map_width(char *line)
 
 	width = 0;
 	index = 0;
-	len = 0;
 	len = ft_countwords(line, ' ');
-	while (len > 0 && line[index] != '\0')// && line[index] != '\n')
+	while (len > 0 && line[index] != '\0')
 	{
 		len--;
 		check = 0;
@@ -50,11 +49,10 @@ static int	get_map_width(char *line)
 			check = 1;
 			index++;
 		}
-		//if (line[index] == ' ')
-		//	index++;
+		while (line[index] == ' ')
+			index++;
 		if (check == 1)
 			width++;
-		index++;
 	}
 	return (width);
 }
@@ -69,7 +67,8 @@ static t_map	*malloc_map(t_map *tmp)
 	map->width = tmp->width;
 	map->height = tmp->height;
 	map->vectors = NULL;
-	map->vectors = ft_memalloc(sizeof(t_vector) * tmp->width * tmp->height);
+	map->vectors = ft_memalloc(sizeof(t_vector)
+			* (size_t)tmp->width * (size_t)tmp->height);
 	if (map->vectors == NULL)
 	{
 		ft_memdel((void **)&map);

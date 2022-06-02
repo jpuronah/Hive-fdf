@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:16:05 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/01 15:43:00 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/02 09:40:58 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	map_depth(t_map *map)
 		{
 			current = *map->vectors[(int)vector.y * map->width + (int)vector.x];
 			if (current.z < min)
-				min = current.z;
+				min = (int)current.z;
 			if (current.z > max)
-				max = current.z;
+				max = (int)current.z;
 			vector.x++;
 		}
 		vector.y++;

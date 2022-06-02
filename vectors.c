@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 23:31:04 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/01 16:12:09 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/02 09:06:21 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ t_map	*vectors_for_map(char *save, t_map *map)
 	int			x;
 	int			y;
 
-	//printf("save:%s\n", save);
 	split_save = ft_strsplit(save, ' ');
 	if (split_save == NULL)
 		delete_save_and_map(save, &map);
@@ -81,7 +80,8 @@ t_map	*vectors_for_map(char *save, t_map *map)
 		x = 0;
 		while (x < map->width)
 		{
-			map->vectors[y * map->width + x] = init_vector(x, y, split_save[x + (y * map->width)]);
+			map->vectors[y * map->width + x]
+				= init_vector(x, y, split_save[x + (y * map->width)]);
 			x++;
 		}
 		y++;
