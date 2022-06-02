@@ -6,11 +6,15 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:27:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/02 13:38:14 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/02 18:00:36 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+//https://www.quora.com/How-do-you-mathematically-spin-a-square
+//https://pbs.twimg.com/media/EePmmJfXoAU9xOn.jpg?name=orig#@troll_lock
+//https://pbs.twimg.com/media/EcAQgNBXkAAEMNy.jpg?name=orig#@troll_lock
 
 static t_mlx	*malloc_mlx(char *win_title, t_map *map)
 {
@@ -29,16 +33,20 @@ static t_mlx	*malloc_mlx(char *win_title, t_map *map)
 		return (NULL);
 	mlx->cam->x = 0.5;
 	mlx->cam->y = 0.5;
-	mlx->cam->scale = 32;
+	mlx->cam->scale = 4;
 	mlx->cam->offsetx = WIN_WIDTH / 2;
 	mlx->cam->offsety = WIN_HEIGHT / 2;
+	mlx->cam->spin = 0;
+	mlx->max_x = 0;
+	mlx->max_y = 0;
 	return (mlx);
 }
 
 static int	init_line(t_mlx *mlx, t_line *line,
 	t_vector *vector1, t_vector *vector2)
 {
-	//printf("err: %d\n\n", line->err);
+	//printf("line1: (%d, %d)\n", (int)vector1->x, (int)vector1->y);
+	//printf("line2: (%d, %d)\n", (int)vector2->x, (int)vector2->y);
 	if (vector1->x < 0 || vector1->x >= WIN_WIDTH || vector1->y < 0
 		|| vector1->y >= WIN_HEIGHT || vector2->x < 0 || vector2->x >= WIN_WIDTH
 		|| vector2->y < 0 || vector2->y >= WIN_HEIGHT)
@@ -100,12 +108,26 @@ static void	draw(t_mlx *mlx, t_vector vector1, t_vector vector2)
 	}
 }
 
+void	get_max_x_and_y(t_mlx *mlx)
+{
+	mlx->max_y = mlx->map->vectors[(mlx->map->height * mlx->map->width) - 1]->y;
+	mlx->max_x = mlx->map->vectors[(mlx->map->height * mlx->map->width) - 1]->x;
+	//mlx->max_y = mlx->map->vectors[mlx->map->height * mlx->map->width]->y * (double)(mlx->map->width - 1) / 2.0f;
+	//mlx->max_x = mlx->map->vectors[mlx->map->height * mlx->map->width]->x * (double)(mlx->map->width - 1) / 2.0f;
+	mlx->max_x = mlx->max_x * mlx->cam->scale + mlx->cam->offsetx;
+	mlx->max_y = mlx->max_y * mlx->cam->scale + mlx->cam->offsety;
+	mlx->max_x = mlx->max_x - (mlx->cam->scale * (mlx->map->width / 2.0f));
+	mlx->max_y = mlx->max_y - (mlx->cam->scale * (mlx->map->height / 2.0f));
+	
+}
+
 void	render(t_mlx *mlx)
 {
 	int			x;
 	int			y;
 	t_vector	vector;
 
+	get_max_x_and_y(mlx);
 	mlx_clear_window(mlx->mlxptr, mlx->winptr);
 	reset_image(mlx->image);
 	y = 0;

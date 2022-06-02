@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:12:21 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/02 12:42:28 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/02 18:03:51 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,10 @@ int	key_event(int key, t_mlx *mlx)
 		mlx->cam->x -= 0.1;
 	if (key == 65363)
 		mlx->cam->y += 0.1;
+	if (key == 'p')
+		mlx->cam->spin += 5;
+	if (key == 'o')
+		mlx->cam->spin -= 5;
 	render(mlx);
 	menu(mlx);
 	return (0);

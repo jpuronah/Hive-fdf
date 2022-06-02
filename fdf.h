@@ -6,14 +6,14 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:18:34 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/02 13:04:20 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/02 18:01:08 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 # define WIN_WIDTH 1280
-# define WIN_HEIGHT 720
+# define WIN_HEIGHT 640
 # define WHITE 0xFFFFFF
 
 # include <mlx.h>
@@ -30,6 +30,7 @@ typedef struct s_cam
 	double		x;
 	double		y;
 	int			scale;
+	double		spin;
 }				t_cam;
 
 typedef struct s_vector
@@ -65,6 +66,8 @@ typedef struct s_mlx
 	t_map		*map;
 	t_cam		*cam;
 	t_image		*image;
+	double		max_x;
+	double		max_y;
 }				t_mlx;
 
 typedef struct s_line
