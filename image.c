@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:12:53 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/02 13:38:30 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/03 13:09:57 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	put_pixel_in_image(t_image *image, int x, int y, int color)
 	*(int *)pixel = color;
 }
 
-void	reset_image(t_image *image)
+void	clear_image(t_image *image)
 {
 	ft_bzero(image->ptr, (size_t)(WIN_WIDTH * WIN_HEIGHT * image->bpp));
 }

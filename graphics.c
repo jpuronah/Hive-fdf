@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:27:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/02 18:00:36 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/03 14:18:07 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ static t_mlx	*malloc_mlx(char *win_title, t_map *map)
 	if (mlx->image == NULL || mlx->cam == NULL || mlx->map == NULL
 		|| mlx->mlxptr == NULL || mlx->winptr == NULL)
 		return (NULL);
-	mlx->cam->x = 0.5;
-	mlx->cam->y = 0.5;
-	mlx->cam->scale = 4;
+	mlx->cam->x = 0;
+	mlx->cam->y = 0;
+	mlx->cam->scale = 32;
 	mlx->cam->offsetx = WIN_WIDTH / 2;
 	mlx->cam->offsety = WIN_HEIGHT / 2;
 	mlx->cam->spin = 0;
@@ -129,8 +129,9 @@ void	render(t_mlx *mlx)
 
 	get_max_x_and_y(mlx);
 	mlx_clear_window(mlx->mlxptr, mlx->winptr);
-	reset_image(mlx->image);
+	clear_image(mlx->image);
 	y = 0;
+	printf("RENDER\n\n\n");
 	while (y < mlx->map->height)
 	{
 		x = 0;

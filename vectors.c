@@ -6,29 +6,35 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 23:31:04 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/02 18:03:43 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/03 13:42:44 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <stdio.h>
 
-static t_vector	geometry_stuff(t_vector p, t_cam *r)
+static t_vector	geometry_stuff(t_vector previous, t_cam *r, t_mlx *mlx)
 {
 	t_vector	vector;
 	double		x;
 	double		y;
 	double		z;
 
-	x = p.x;
-	z = p.z;
+	x = previous.x;
+	z = previous.z;
+	//printf("cam: %f, %f\n", r->x, r->y);
+	if (r->y < -6.2 || r->y > 6.2)
+		mlx->cam->y = 0;
+	if (r->x < -6.2 || r->x > 6.2)
+		mlx->cam->x = 0;
 	vector.x = cos(r->y) * x + sin(r->y) * z;
 	vector.z = -sin(r->y) * x + cos(r->y) * z;
-	y = p.y;
+	y = previous.y;
+	//printf("(%f, %f)\n", x, y);
 	z = vector.z;
 	vector.y = cos(r->x) * y - sin(r->x) * z;
 	vector.z = sin(r->x) * y + cos(r->x) * z;
-	vector.color = p.color;
+	vector.color = previous.color;
 	return (vector);
 }
 
@@ -39,10 +45,14 @@ t_vector	get_vector_for_render(t_map *map, int x, int y)
 
 t_vector	project_vector(t_vector vector, t_mlx *mlx)
 {
+	//printf("inee: %f, %f, %f\n", vector.x, vector.y, vector.z);
 	vector.x -= (double)(mlx->map->width - 1) / 2.0f;
 	vector.y -= (double)(mlx->map->height - 1) / 2.0f;
 	vector.z -= (double)(mlx->map->depth_min + mlx->map->depth_max) / 2.0f;
-	vector = geometry_stuff(vector, mlx->cam);
+	//printf("%d, %d, %d\n", mlx->map->width, mlx->map->height, mlx->map->depth_min + mlx->map->depth_max);
+	//printf("kesk: %f, %f, %f\n", vector.x, vector.y, vector.z);
+	vector = geometry_stuff(vector, mlx->cam, mlx);
+	//printf("ulos: %f, %f, %f\n\n", vector.x, vector.y, vector.z);
 	vector.x *= mlx->cam->scale;
 	vector.y *= mlx->cam->scale;
 	vector.x += mlx->cam->offsetx;

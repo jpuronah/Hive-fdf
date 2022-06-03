@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:12:21 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/02 18:03:51 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/03 13:12:41 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@ void	menu(t_mlx *mlx)
 	mlx_string_put(mlx->mlxptr, mlx->winptr, 20, 20,
 		WHITE, "Press 'ESC' to EXIT PROGRAM");
 	mlx_string_put(mlx->mlxptr, mlx->winptr, 20, 40,
-		WHITE, "Move: 'WASD' / 'wasd'");
+		WHITE, "Move: 'WASD'");
 	mlx_string_put(mlx->mlxptr, mlx->winptr, 20, 60,
 		WHITE, "Zoom: '+' & '-'");
 	mlx_string_put(mlx->mlxptr, mlx->winptr, 20, 80,
 		WHITE, "Rotate: ARROW KEYS");
+	mlx_string_put(mlx->mlxptr, mlx->winptr, 20, 100,
+		WHITE, "Reset: 'R'");
 }
 
 static int	exit_fdf(t_mlx *mlx)
@@ -31,8 +33,18 @@ static int	exit_fdf(t_mlx *mlx)
 	exit (EXIT_SUCCESS);
 }
 
+void	reset_camera(t_mlx *mlx)
+{
+	mlx->cam->x = 0;
+	mlx->cam->y = 0;
+	mlx->cam->scale = 32;
+	mlx->cam->offsetx = WIN_WIDTH / 2;
+	mlx->cam->offsety = WIN_HEIGHT / 2;
+}
+
 int	key_event(int key, t_mlx *mlx)
 {
+	printf("%d\n", key);
 	if (key == 65307)
 		exit_fdf(mlx);
 	if (key == '+')
@@ -51,14 +63,16 @@ int	key_event(int key, t_mlx *mlx)
 		mlx->cam->x += 0.1;
 	if (key == 65361)
 		mlx->cam->y -= 0.1;
-	if (key == 65364)
+	if (key == 65364)			/*down*/
 		mlx->cam->x -= 0.1;
 	if (key == 65363)
 		mlx->cam->y += 0.1;
-	if (key == 'p')
+	if (key == 'r')
+		reset_camera(mlx);
+	/*if (key == 'p')
 		mlx->cam->spin += 5;
 	if (key == 'o')
-		mlx->cam->spin -= 5;
+		mlx->cam->spin -= 5;*/
 	render(mlx);
 	menu(mlx);
 	return (0);

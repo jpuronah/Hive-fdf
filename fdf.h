@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:18:34 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/02 18:01:08 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/03 13:42:04 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void		render(t_mlx *mlx);
 
 t_image		*new_image(t_mlx *mlx);
 t_image		*delete_image(t_mlx *mlx, t_image *img);
-void		reset_image(t_image *image);
+void		clear_image(t_image *image);
 void		put_pixel_in_image(t_image *image, int x, int y, int color);
 
 int			key_event(int key, t_mlx *mlx);
