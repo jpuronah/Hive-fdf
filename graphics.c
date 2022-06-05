@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:27:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/03 14:18:07 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/05 20:57:52 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static t_mlx	*malloc_mlx(char *win_title, t_map *map)
 		return (NULL);
 	mlx->cam->x = 0;
 	mlx->cam->y = 0;
-	mlx->cam->scale = 32;
+	mlx->cam->scale = 4;
 	mlx->cam->offsetx = WIN_WIDTH / 2;
 	mlx->cam->offsety = WIN_HEIGHT / 2;
 	mlx->cam->spin = 0;
@@ -45,8 +45,6 @@ static t_mlx	*malloc_mlx(char *win_title, t_map *map)
 static int	init_line(t_mlx *mlx, t_line *line,
 	t_vector *vector1, t_vector *vector2)
 {
-	//printf("line1: (%d, %d)\n", (int)vector1->x, (int)vector1->y);
-	//printf("line2: (%d, %d)\n", (int)vector2->x, (int)vector2->y);
 	if (vector1->x < 0 || vector1->x >= WIN_WIDTH || vector1->y < 0
 		|| vector1->y >= WIN_HEIGHT || vector2->x < 0 || vector2->x >= WIN_WIDTH
 		|| vector2->y < 0 || vector2->y >= WIN_HEIGHT)
@@ -70,55 +68,29 @@ static void	draw(t_mlx *mlx, t_vector vector1, t_vector vector2)
 {
 	t_line	line;
 
-	/*vector1.x = (int)vector1.x;
-	vector2.x = (int)vector2.x;
-	vector1.y = (int)vector1.y;
-	vector2.y = (int)vector2.y;*/
 	line.start = vector1;
 	line.stop = vector2;
 	line.delta_x = (int)ft_abs((int)vector2.x - (int)vector1.x);
-	//line.sx = (int)vector1.x < (int)vector2.x ? 1 : -1;
 	if ((int)vector1.x < (int)vector2.x)
 		line.sx = 1;
 	else
 		line.sx = -1;
 	line.delta_y = (int)ft_abs((int)vector2.y - (int)vector1.y);
-	//line.sy = (int)vector1.y < (int)vector2.y ? 1 : -1;
 	if ((int)vector1.y < (int)vector2.y)
 		line.sy = 1;
 	else
 		line.sy = -1;
-	//line.err = (line.delta_x > line.delta_y ? line.delta_x : -line.delta_y) / 2;
 	if (line.delta_x > line.delta_y)
 		line.err = line.delta_x / 2;
 	else
 		line.err = -line.delta_y / 2;
 	while ((int)vector1.x != (int)vector2.x || (int)vector1.y != (int)vector2.y)
-	{
-		//printf("vector1: (%d, %d) %f\n", (int)vector1.x, (int)vector1.y, vector1.z);
-		//printf("vector2: (%d, %d) %f\n", (int)vector2.x, (int)vector2.y, vector2.z);
 		if (init_line(mlx, &line, &vector1, &vector2))
 			break ;
-	}
 	if ((int)vector1.x == (int)vector2.x && (int)vector1.y == (int)vector2.y)
 	{
-		//printf("if vector1: (%d, %d) %f\n", (int)vector1.x, (int)vector1.y, vector1.z);
-		//printf("if vector2: (%d, %d) %f\n", (int)vector2.x, (int)vector2.y, vector2.z);
 		init_line(mlx, &line, &vector1, &vector2);
 	}
-}
-
-void	get_max_x_and_y(t_mlx *mlx)
-{
-	mlx->max_y = mlx->map->vectors[(mlx->map->height * mlx->map->width) - 1]->y;
-	mlx->max_x = mlx->map->vectors[(mlx->map->height * mlx->map->width) - 1]->x;
-	//mlx->max_y = mlx->map->vectors[mlx->map->height * mlx->map->width]->y * (double)(mlx->map->width - 1) / 2.0f;
-	//mlx->max_x = mlx->map->vectors[mlx->map->height * mlx->map->width]->x * (double)(mlx->map->width - 1) / 2.0f;
-	mlx->max_x = mlx->max_x * mlx->cam->scale + mlx->cam->offsetx;
-	mlx->max_y = mlx->max_y * mlx->cam->scale + mlx->cam->offsety;
-	mlx->max_x = mlx->max_x - (mlx->cam->scale * (mlx->map->width / 2.0f));
-	mlx->max_y = mlx->max_y - (mlx->cam->scale * (mlx->map->height / 2.0f));
-	
 }
 
 void	render(t_mlx *mlx)
@@ -127,11 +99,9 @@ void	render(t_mlx *mlx)
 	int			y;
 	t_vector	vector;
 
-	get_max_x_and_y(mlx);
 	mlx_clear_window(mlx->mlxptr, mlx->winptr);
 	clear_image(mlx->image);
 	y = 0;
-	printf("RENDER\n\n\n");
 	while (y < mlx->map->height)
 	{
 		x = 0;

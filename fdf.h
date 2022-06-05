@@ -6,17 +6,18 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:18:34 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/03 13:42:04 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/05 20:04:16 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
-# define WIN_WIDTH 1280
-# define WIN_HEIGHT 640
+# define WIN_WIDTH 2560
+# define WIN_HEIGHT 1280
 # define WHITE 0xFFFFFF
 
 # include <mlx.h>
+//# include "/usr/local/lib/libmlx.a"
 # include "libft/libft.h"
 # include <fcntl.h>
 # include <math.h>

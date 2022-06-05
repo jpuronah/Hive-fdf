@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 17:02:45 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/02 12:50:46 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/05 20:53:29 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,17 @@ static t_map	*malloc_map(t_map *tmp)
 static char	*save_fd_to_array(int fd, t_mlx *mlx)
 {
 	int			ret;
+	int			file_has_content;
 	char		*line;
 	char		*save;
 
+	file_has_content = 0;
 	save = NULL;
 	mlx->map = init_map();
 	ret = get_next_line(fd, &line);
 	while (ret == 1)
 	{
+		file_has_content = 1;
 		mlx->map->height++;
 		if (mlx->map->width == 0)
 			mlx->map->width = get_map_width(line);
@@ -99,9 +102,41 @@ static char	*save_fd_to_array(int fd, t_mlx *mlx)
 		ft_strdel(&line);
 		ret = get_next_line(fd, &line);
 	}
-	ft_strdel(&line);
-	free(line);
+	if (file_has_content == 1)
+	{
+		ft_strdel(&line);
+		free(line);
+	}
+	else
+		print_error("error: empty file OR directory");
 	return (save);
+}
+
+void	check_map_array(char *array)
+{
+	int		digit;
+	int		space;
+	int		sign;
+	int		index;
+
+	digit = 0;
+	space = 0;
+	sign = 0;
+	index = 0;
+	while (array[index] != '\0')
+	{
+		if (array[index] == ' ')
+			space = 1;
+		else if (ft_isdigit(array[index]) == 1)
+			digit = 1;
+		else if (array[index] == '-')
+			sign = 0;
+		else
+			print_error("error: input file character error");
+		++index;
+	}
+	if (digit == 0 || space == 0)
+		print_error("error: input file character error");
 }
 
 void	read_and_save_map(int fd, t_mlx *mlx)
@@ -109,6 +144,7 @@ void	read_and_save_map(int fd, t_mlx *mlx)
 	char	*map_array;
 
 	map_array = save_fd_to_array(fd, mlx);
+	check_map_array(map_array);
 	mlx->map = malloc_map(mlx->map);
 	mlx->map = vectors_for_map(map_array, mlx->map);
 	free(map_array);

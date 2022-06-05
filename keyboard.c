@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:12:21 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/03 13:12:41 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/05 20:55:39 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static int	exit_fdf(t_mlx *mlx)
 {
 	delete_image(mlx, mlx->image);
 	mlx_destroy_window(mlx->mlxptr, mlx->winptr);
+	//system("leaks fdf");
 	exit (EXIT_SUCCESS);
 }
 
@@ -44,35 +45,34 @@ void	reset_camera(t_mlx *mlx)
 
 int	key_event(int key, t_mlx *mlx)
 {
-	printf("%d\n", key);
-	if (key == 65307)
+	if (key == 53)
 		exit_fdf(mlx);
-	if (key == '+')
+	/* if key == 1
+			view 1
+		else
+			view 2	*/
+	if (key == 24)
 		mlx->cam->scale = mlx->cam->scale + 1;
-	if (key == '-')
+	if (key == 27)
 		mlx->cam->scale = mlx->cam->scale - 1;
-	if (key == 'w')
+	if (key == 13)
 		mlx->cam->offsety -= 10;
-	if (key == 'a')
+	if (key == 0)
 		mlx->cam->offsetx -= 10;
-	if (key == 's')
+	if (key == 1)
 		mlx->cam->offsety += 10;
-	if (key == 'd')
+	if (key == 2)
 		mlx->cam->offsetx += 10;
-	if (key == 65362)
+	if (key == 126)
 		mlx->cam->x += 0.1;
-	if (key == 65361)
+	if (key == 123)
 		mlx->cam->y -= 0.1;
-	if (key == 65364)			/*down*/
+	if (key == 125)
 		mlx->cam->x -= 0.1;
-	if (key == 65363)
+	if (key == 124)
 		mlx->cam->y += 0.1;
-	if (key == 'r')
+	if (key == 15)
 		reset_camera(mlx);
-	/*if (key == 'p')
-		mlx->cam->spin += 5;
-	if (key == 'o')
-		mlx->cam->spin -= 5;*/
 	render(mlx);
 	menu(mlx);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:43:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/02 12:51:59 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/05 20:45:14 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	print_error(char *reason)
 {
 	ft_putendl(reason);
+	//system("leaks fdf");
 	exit(EXIT_FAILURE);
 }
 
@@ -41,7 +42,12 @@ int	main(int ac, char **av)
 	if (ac == 2 && fd > 0)
 		read_and_save_map(fd, mlx);
 	else
-		print_error("error: wrong number of arguments");
+	{
+		if (fd < 0)
+			print_error("error: check inputfile");
+		else
+			print_error("error: wrong number of arguments");
+	}
 	close(fd);
 	graphics(mlx->map, av[1]);
 	return (0);
