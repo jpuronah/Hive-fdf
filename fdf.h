@@ -6,23 +6,20 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:18:34 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/12 20:05:51 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/12 20:19:51 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
-# define WIN_WIDTH 500
-# define WIN_HEIGHT 500
+# define WIN_WIDTH 2560
+# define WIN_HEIGHT 1280
 # define WHITE 0xFFFFFF
 
-# include <mlx.h>
 # include "libft/libft.h"
+# include <mlx.h>
 # include <fcntl.h>
 # include <math.h>
-# include <limits.h>
-# include <stdio.h>
-//printf poiess!
 
 typedef struct s_vector
 {

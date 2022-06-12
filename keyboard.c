@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:12:21 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/12 20:06:36 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/12 20:26:16 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	menu(t_mlx *mlx)
 	mlx_string_put(mlx->mlxptr, mlx->winptr, 20, 80,
 		WHITE, "Movement: 'WASD'");
 	mlx_string_put(mlx->mlxptr, mlx->winptr, 20, 100,
+		WHITE, "Movement x10: Arrow keys");
+	mlx_string_put(mlx->mlxptr, mlx->winptr, 20, 120,
 		WHITE, "Change start point: 8 / 9 / 0");
 }
 
@@ -57,6 +59,12 @@ static void	set_angle(int key, t_mlx *mlx)
 
 static void	more_events(int key, t_mlx *mlx)
 {
+	if (mlx->angle->scale < 1000)
+		if (key == 24)
+			mlx->angle->scale += 1;
+	if (mlx->angle->scale > 1)
+		if (key == 27)
+			mlx->angle->scale -= 1;
 	if (key == 15)
 	{
 		mlx->projection = 1;
@@ -82,12 +90,6 @@ int	key_event(int key, t_mlx *mlx)
 	if (key == 53)
 		exit_fdf(mlx);
 	set_angle(key, mlx);
-	if (mlx->angle->scale < 1000)
-		if (key == 24)
-			mlx->angle->scale += 1;
-	if (mlx->angle->scale > 1)
-		if (key == 27)
-			mlx->angle->scale -= 1;
 	if (key == 13)
 		mlx->angle->offsety -= 15;
 	if (key == 1)
@@ -96,6 +98,14 @@ int	key_event(int key, t_mlx *mlx)
 		mlx->angle->offsetx += 15;
 	if (key == 0)
 		mlx->angle->offsetx -= 15;
+	if (key == 126)
+		mlx->angle->offsety -= 150;
+	if (key == 125)
+		mlx->angle->offsety += 150;
+	if (key == 124)
+		mlx->angle->offsetx += 150;
+	if (key == 123)
+		mlx->angle->offsetx -= 150;
 	more_events(key, mlx);
 	render(mlx);
 	menu(mlx);

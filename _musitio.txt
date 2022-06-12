@@ -1,3 +1,11 @@
+KOULULLA TSEKATTU:
+
+- kaikissa LEAKS OK (maps, test_maps, easy_test_maps)
+
+PUUTTUU
+- TSEKKAA ET MAKEFILE JA FDF_H ON OKAY
+
+
 FUCK YOU KAIKKI TOIMIISAATANA
 
 To DO:
