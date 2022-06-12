@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 15:12:53 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/12 16:35:59 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/12 20:06:21 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	put_pixel_in_image(t_image *image, int x, int y, int color)
 
 	if (x < 0 || x >= WIN_WIDTH || y < 0 || y >= WIN_HEIGHT)
 		return ;
-	//else
-	//	printf("pixel: %d, %d\n", x, y);
 	pixel = image->ptr + (y * image->line_bytes + x * (image->bpp));
 	*(int *)pixel = color;
 }

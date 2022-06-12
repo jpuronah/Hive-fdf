@@ -6,13 +6,13 @@
 #    By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/19 15:44:35 by jpuronah          #+#    #+#              #
-#    Updated: 2022/06/12 17:36:23 by jpuronah         ###   ########.fr        #
+#    Updated: 2022/06/12 19:32:17 by jpuronah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #Tämä jiiriin vielä
 NAME = fdf
-SOURCES = main.c read_and_save_map.c vectors.c graphics.c graphics_utility.c image.c keyboard.c map_utility.c lineclipper.c
+SOURCES = main.c read_and_save_map.c vectors.c graphics.c graphics_utility.c image.c keyboard.c map_utility.c line_clipper.c
 INCLUDES = fdf.h
 FLAGS = -Wconversion -Wall -Wextra -Werror
 LINKS = -L /usr/local/lib -lmlx -I /usr/local/include -framework OpenGL -framework AppKit

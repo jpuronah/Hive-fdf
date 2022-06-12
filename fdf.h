@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:18:34 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/12 15:48:54 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/12 20:05:51 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "libft/libft.h"
 # include <fcntl.h>
 # include <math.h>
+# include <limits.h>
 # include <stdio.h>
 //printf poiess!
 
@@ -69,17 +70,13 @@ typedef struct s_mlx
 	t_image		*image;
 }				t_mlx;
 
-typedef struct s_line
+typedef struct s_line_clip
 {
-	t_vector	start;
-	t_vector	stop;
-	int			delta_x;
-	int			delta_y;
-	int			sx;
-	int			sy;
-	int			err;
-	int			err2;
-}				t_line;
+	int			region1;
+	int			region2;
+	int			drawroutine;
+	t_vector	tmp_vec;
+}				t_line_clip;
 
 void		print_error(char *reason);
 void		read_and_save_map(int fd, t_mlx *mlx);

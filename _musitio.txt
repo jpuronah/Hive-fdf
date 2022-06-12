@@ -3,6 +3,9 @@ FUCK YOU KAIKKI TOIMIISAATANA
 To DO:
 - lineclipperin matikka uusiks ja sitä muutenki pitää tsekkailla
 
+
+
+TATA EN SALEE JAKSA TEHA KOSKA IHA PERSEESTA
 EI TOIMI (HIMASSA)
 - high_value max int ei näy mutta saa näkyviin jos projection = 0
  MAXIIN SYY ON ETTÄ MAX KERROTAAN JA SIT MENNÄÄ YLI MAX INTEGERIN JOSSAIN VÄLISSÄ JA KAIKKI VITURALLEEN
@@ -148,3 +151,65 @@ In case someone needs inspiration on what to check for fdf before returning it, 
 -copy the map of mars 6 times (or world map etc., found one in sadawi's github) in one file and see that it still runs nicely
 
 7. There can be no segfault, ever, lines must be drawn, almost everything else is up to you!
+
+
+
+
+
+
+
+
+
+/*	if (draw_routine & 1)
+	{
+		tmp_vec.x = p1->x + (p2->x - p1->x) * (WIN_HEIGHT - p1->y) / (p2->y - p1->y);
+		tmp_vec.y = WIN_HEIGHT;
+	}
+	else if (draw_routine & 2)
+	{
+		tmp_vec.x = p1->x + (p2->x - p1->x) * -p1->y / (p2->y - p1->y);
+		tmp_vec.y = 0;
+	}
+	else if (draw_routine & 4)
+	{
+		tmp_vec.x = WIN_WIDTH;
+		tmp_vec.y = p1->y + (p2->y - p1->y) * (WIN_WIDTH - p1->x) / (p2->x - p1->x);
+	}
+	else if (draw_routine & 8)
+	{
+		tmp_vec.x = 0;
+		tmp_vec.y = p1->y + (p2->y - p1->y) * -p1->x / (p2->x - p1->x);
+	}*/
+
+	/*if (y > WIN_HEIGHT)
+		vector_region = 1;
+	else if (y < 0)
+		vector_region = 2;
+	if (x > WIN_WIDTH)
+		vector_region = 4;
+	else if (x < 0)
+		vector_region = 8;*/
+
+	/*region_vec1 = 0;
+	region_vec2 = 0;
+	if (vector1->y > WIN_HEIGHT)
+		region_vec1 |= 1;
+	else if (vector1->y < 0)
+		region_vec1 |= 2;
+	if (vector1->x > WIN_WIDTH)
+		region_vec1 |= 4;
+	else if (vector1->x < 0)
+		region_vec1 |= 8;
+	if (vector2->y > WIN_HEIGHT)
+		region_vec2 |= 1;
+	else if (vector2->y < 0)
+		region_vec2 |= 2;
+	if (vector2->x > WIN_WIDTH)
+		region_vec2 |= 4;
+	else if (vector2->x < 0)
+		region_vec2 |= 8;*/
+
+	//draw_routine = region_vec1 ? region_vec1 : region_vec2;
+	//while (!(!(region_vec1 | region_vec2) || (region_vec1 & region_vec2)))
+	//return (!(region_vec1 | region_vec2));
+	//if (region_vec1 != 0 && region_vec2 != 0)

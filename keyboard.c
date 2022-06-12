@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:12:21 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/12 18:50:55 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/12 20:06:36 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static int	exit_fdf(t_mlx *mlx)
 {
 	delete_image(mlx, mlx->image);
 	mlx_destroy_window(mlx->mlxptr, mlx->winptr);
-	//system("leaks fdf");
 	exit (EXIT_SUCCESS);
 }
 
@@ -80,7 +79,6 @@ static void	more_events(int key, t_mlx *mlx)
 
 int	key_event(int key, t_mlx *mlx)
 {
-	printf("%d\n", key);
 	if (key == 53)
 		exit_fdf(mlx);
 	set_angle(key, mlx);
@@ -103,32 +101,3 @@ int	key_event(int key, t_mlx *mlx)
 	menu(mlx);
 	return (0);
 }
-
-/* CONTROLS HOME */
-	/*if (key == 'w')
-		mlx->angle->offsety -= 15;
-	if (key == 's')
-		mlx->angle->offsety += 15;
-	if (key == 'd')
-		mlx->angle->offsetx += 15;
-	if (key == 'a')
-		mlx->angle->offsetx -= 15;
-	if (key == 'x')
-		exit_fdf(mlx);
-	set_angle(key, mlx);
-	if (mlx->angle->scale < 1000)
-		if (key == '+')
-			mlx->angle->scale += 1;
-	if (mlx->angle->scale > 1)
-		if (key == '-')
-			mlx->angle->scale -= 1;
-	if (key == 'r')
-	{
-		mlx->projection = 1;
-		mlx->end = 1;
-		mlx->angle->x = 0.52359;
-		mlx->angle->y = 0.52359;
-		mlx->angle->scale = 16;
-		mlx->angle->offsetx = WIN_WIDTH / 2;
-		mlx->angle->offsety = WIN_HEIGHT / 2;
-	}*/

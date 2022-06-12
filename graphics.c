@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:27:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/12 18:34:54 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/12 20:05:23 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,10 @@ static t_vector	shift_view(t_vector vector, t_mlx *mlx)
 		vector = set_projection_1(vector, mlx);
 	else
 		vector = set_projection_2_and_0(vector, mlx);
-	//printf("5 %f\n", vector.z);
 	vector.x *= mlx->angle->scale;
 	vector.y *= mlx->angle->scale;
 	vector.x += mlx->angle->offsetx;
 	vector.y += mlx->angle->offsety;
-	//printf("6 %f\n", vector.z);
 	return (vector);
 }
 
@@ -58,14 +56,12 @@ static void	draw(t_mlx *mlx, t_vector vec1, t_vector vec2)
 	double		delta_x;
 	double		delta_y;
 
-	//printf("1 %f\n", vec1.z);
 	vec1 = shift_view(vec1, mlx);
 	vec2 = shift_view(vec2, mlx);
 	delta_x = calculate_delta(vec1, vec2, 1);
 	delta_y = calculate_delta(vec1, vec2, 2);
 	if (!cohen_sutherland_lineclip(&vec1, &vec2))
 		return ;
-	//printf("x %f\n", vec1.z);
 	while (((int)(vec1.x - round(vec2.x)) || (int)(vec1.y - round(vec2.y))))
 	{
 		if (vec1.x > WIN_WIDTH || vec1.y > WIN_HEIGHT
