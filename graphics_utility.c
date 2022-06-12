@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 15:17:52 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/12 17:42:36 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/12 18:34:59 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ t_vector	set_projection_1(t_vector vector, t_mlx *mlx)
 	z = vector.z;
 	sin_theta = sin(mlx->angle->x);
 	cos_theta = cos(mlx->angle->y);
-	printf("3 %f\n", vec.z);
+//	printf("3 %f\n", vector.z);
 	vector.x = x * cos(mlx->angle->y) + sin_theta * z;
 	vector.z = x * (-sin_theta) + cos_theta * z;
 	vector.y = y * cos_theta + sin_theta * vector.z;
-	printf("4 %f\n", vec.z);
+//	printf("4 %f\n", vector.z);
 	return (vector);
 }
 
