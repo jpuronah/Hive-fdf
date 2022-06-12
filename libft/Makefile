@@ -6,7 +6,7 @@
 #    By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/09 15:40:47 by jpuronah          #+#    #+#              #
-#    Updated: 2022/06/05 20:34:25 by jpuronah         ###   ########.fr        #
+#    Updated: 2022/06/12 15:58:00 by jpuronah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,10 @@ $(NAME):
 			./ft_countwords.c \
 			./ft_lstrev.c \
 			./ft_abs.c \
-			./ft_create_elem.c
+			./ft_create_elem.c \
+			./ft_max.c \
+			./ft_max_double.c \
+			./ft_abs_db.c
 	ar -rc libft.a ./ft_atoi.o \
 			./ft_bzero.o \
 			./ft_isalnum.o \
@@ -148,6 +151,9 @@ $(NAME):
 			./ft_lstrev.o \
 			./ft_abs.o \
 			./ft_create_elem.o \
+			./ft_max.o \
+			./ft_max_double.o \
+			./ft_abs_db.o
 
 leaks:
 	gcc -fsanitize=address -g -Wall -Wextra -Werror -c ./ft_atoi.c \
@@ -214,7 +220,10 @@ leaks:
 			./ft_countwords.c \
 			./ft_lstrev.c \
 			./ft_abs.c \
-			./ft_create_elem.c
+			./ft_create_elem.c \
+			./ft_max.c \
+			./ft_max_double.c \
+			./ft_abs_db.c
 	ar -rc libft.a ./ft_atoi.o \
 			./ft_bzero.o \
 			./ft_isalnum.o \
@@ -280,6 +289,9 @@ leaks:
 			./ft_lstrev.o \
 			./ft_abs.o \
 			./ft_create_elem.o \
+			./ft_max.o \
+			./ft_max_double.o \
+			./ft_abs_db.o
 
 
 clean:

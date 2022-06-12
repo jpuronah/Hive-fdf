@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 15:43:13 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/05 20:45:14 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/12 14:57:13 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	print_error(char *reason)
 {
 	ft_putendl(reason);
-	//system("leaks fdf");
 	exit(EXIT_FAILURE);
 }
 
@@ -26,9 +25,10 @@ static t_mlx	*init_mlx(void)
 	mlx = (t_mlx *)malloc(sizeof(t_mlx));
 	mlx->mlxptr = NULL;
 	mlx->winptr = NULL;
-	mlx->map = NULL;
-	mlx->cam = NULL;
+	mlx->map = init_map();
+	mlx->angle = NULL;
 	mlx->image = NULL;
+	mlx->projection = 1;
 	return (mlx);
 }
 
@@ -44,7 +44,7 @@ int	main(int ac, char **av)
 	else
 	{
 		if (fd < 0)
-			print_error("error: check inputfile");
+			print_error("usage: ./fdf <inputfile>");
 		else
 			print_error("error: wrong number of arguments");
 	}

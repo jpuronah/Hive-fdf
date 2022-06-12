@@ -6,51 +6,35 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 23:31:04 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/05 20:54:10 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/12 15:19:18 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
-static t_vector	geometry_stuff(t_vector previous, t_cam *r, t_mlx *mlx)
+t_vector	vector_list(t_mlx *mlx, int x, int y)
 {
 	t_vector	vector;
-	double		x;
-	double		y;
-	double		z;
 
-	x = previous.x;
-	z = previous.z;
-	if (r->y < -6.2 || r->y > 6.2)
-		mlx->cam->y = 0;
-	if (r->x < -6.2 || r->x > 6.2)
-		mlx->cam->x = 0;
-	vector.x = cos(r->y) * x + sin(r->y) * z;
-	vector.z = -sin(r->y) * x + cos(r->y) * z;
-	y = previous.y;
-	z = vector.z;
-	vector.y = cos(r->x) * y - sin(r->x) * z;
-	vector.z = sin(r->x) * y + cos(r->x) * z;
-	vector.color = previous.color;
-	return (vector);
-}
-
-t_vector	get_vector_for_render(t_map *map, int x, int y)
-{
-	return (*map->vectors[y * map->width + x]);
-}
-
-t_vector	project_vector(t_vector vector, t_mlx *mlx)
-{
-	vector.x -= (double)(mlx->map->width - 1) / 2.0f;
-	vector.y -= (double)(mlx->map->height - 1) / 2.0f;
-	vector.z -= (double)(mlx->map->depth_min + mlx->map->depth_max) / 2.0f;
-	vector = geometry_stuff(vector, mlx->cam, mlx);
-	vector.x *= mlx->cam->scale;
-	vector.y *= mlx->cam->scale;
-	vector.x += mlx->cam->offsetx;
-	vector.y += mlx->cam->offsety;
+	vector = *mlx->map->vectors[y * mlx->map->width + x];
+	if (mlx->end == 1)
+	{
+		vector.x -= (double)(mlx->map->width - 1.0) / 2.0f;
+		vector.y -= (double)(mlx->map->height - 1.0) / 2.0f;
+		vector.z -= (double)(mlx->map->depth_min + mlx->map->depth_max) / 2.0f;
+	}
+	if (mlx->end == 2)
+	{
+		vector.x -= (double)(mlx->map->width - 1.0);
+		vector.y -= (double)(mlx->map->height - 1.0);
+		vector.z -= (double)(mlx->map->depth_min + mlx->map->depth_max);
+	}
+	if (mlx->end == 3)
+	{
+		vector.x -= 0;
+		vector.y -= 0;
+		vector.z -= 0;
+	}
 	return (vector);
 }
 
@@ -66,6 +50,8 @@ static t_vector	*init_vector(int x, int y, char *str)
 	vector->y = y;
 	if (str != NULL)
 		vector->z = ft_atoi(str);
+	if (vector->z > 2147483647 || vector->z < -2147483648)
+		print_error("error: z value outside int scope");
 	vector->color = 0;
 	return (vector);
 }
@@ -95,6 +81,5 @@ t_map	*vectors_for_map(char *save, t_map *map)
 	while (split_save[y])
 		free(split_save[y++]);
 	free(split_save);
-	map_depth(map);
 	return (map);
 }

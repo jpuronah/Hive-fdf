@@ -6,33 +6,22 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 11:18:34 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/05 20:04:16 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/12 15:48:54 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
-# define WIN_WIDTH 2560
-# define WIN_HEIGHT 1280
+# define WIN_WIDTH 500
+# define WIN_HEIGHT 500
 # define WHITE 0xFFFFFF
 
 # include <mlx.h>
-//# include "/usr/local/lib/libmlx.a"
 # include "libft/libft.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
-//# include <X11/keysym.h>
-
-typedef struct s_cam
-{
-	double		offsetx;
-	double		offsety;
-	double		x;
-	double		y;
-	int			scale;
-	double		spin;
-}				t_cam;
+//printf poiess!
 
 typedef struct s_vector
 {
@@ -60,15 +49,24 @@ typedef struct s_image
 	int			endian;
 }				t_image;
 
+typedef struct s_angle
+{
+	double		offsetx;
+	double		offsety;
+	double		x;
+	double		y;
+	double		scale;
+}				t_angle;
+
 typedef struct s_mlx
 {
 	void		*mlxptr;
 	void		*winptr;
+	int			projection;
+	int			end;
 	t_map		*map;
-	t_cam		*cam;
+	t_angle		*angle;
 	t_image		*image;
-	double		max_x;
-	double		max_y;
 }				t_mlx;
 
 typedef struct s_line
@@ -83,19 +81,22 @@ typedef struct s_line
 	int			err2;
 }				t_line;
 
+void		print_error(char *reason);
 void		read_and_save_map(int fd, t_mlx *mlx);
 
-char		*save_save(char *save, char *line);
+t_map		*init_map(void);
+void		check_line(char *line, t_mlx *mlx);
 void		map_depth(t_map *map);
-int			delete_save_and_map(char *save, t_map **map);
-
-t_vector	**get_vectors(char *save, t_map *map);
+char		*save_save(char *save, char *line);
 t_map		*vectors_for_map(char *save, t_map *map);
-t_vector	get_vector_for_render(t_map *map, int x, int y);
-t_vector	project_vector(t_vector v, t_mlx *mlx);
 
 void		graphics(t_map *map, char *window_title);
 void		render(t_mlx *mlx);
+int			cohen_sutherland_lineclip(t_vector *vector1, t_vector *vector2);
+
+t_vector	vector_list(t_mlx *mlx, int x, int y);
+t_vector	set_projection_1(t_vector two_d, t_mlx *mlx);
+t_vector	set_projection_2_and_0(t_vector two_d, t_mlx *mlx);
 
 t_image		*new_image(t_mlx *mlx);
 t_image		*delete_image(t_mlx *mlx, t_image *img);
@@ -104,6 +105,11 @@ void		put_pixel_in_image(t_image *image, int x, int y, int color);
 
 int			key_event(int key, t_mlx *mlx);
 void		menu(t_mlx *mlx);
-void		print_error(char *reason);
+
+double		ft_abs_db(double i);
+double		ft_max_double(double a, double b);
+double		calculate_delta(t_vector vec1, t_vector vec2, int letter);
+void		finish_line_and_one_point(t_vector vec1, t_vector end, t_mlx *mlx);
+int			delete_save_and_map(char *save, t_map **map);
 
 #endif
