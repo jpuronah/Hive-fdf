@@ -6,7 +6,7 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 18:03:32 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/12 15:56:07 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/13 13:07:33 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-long long	ft_atoi(char const *str);
+long		ft_atoi(char const *str);
 int			ft_isalnum(int c);
 int			ft_isalpha(int c);
 int			ft_isascii(int c);

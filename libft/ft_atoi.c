@@ -6,15 +6,15 @@
 /*   By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 16:06:58 by jpuronah          #+#    #+#             */
-/*   Updated: 2022/06/12 11:53:47 by jpuronah         ###   ########.fr       */
+/*   Updated: 2022/06/13 13:07:26 by jpuronah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-long long	ft_atoi(char const *str)
+long	ft_atoi(char const *str)
 {
-	long long	num;
+	long	num;
 	int			sign;
 	int			i;
 
