@@ -1,3 +1,11 @@
+KATO KOULULLA:
+	-MITEN MUILLA TOIMII high_value mappi Vs oma
+	-Koita näitä:
+
+	-Wall -Wextra -Werror -ansi -pedantic -Wshadow -Wno-missing-noreturn \
+			-Wno-padded -Wno-unreachable-code -Wredundant-decls \
+			-Wmissing-declarations
+
 KOULULLA TSEKATTU:
 
 - kaikissa LEAKS OK (maps, test_maps, easy_test_maps)
@@ -18,17 +26,6 @@ EI TOIMI (HIMASSA)
 - high_value max int ei näy mutta saa näkyviin jos projection = 0
  MAXIIN SYY ON ETTÄ MAX KERROTAAN JA SIT MENNÄÄ YLI MAX INTEGERIN JOSSAIN VÄLISSÄ JA KAIKKI VITURALLEEN
 VERTAA high_value ja high_value2
-
-
-
-TOIMII:: (HIMASSA)
-- easy_test_maps/
-- maps/
-- test_maps
-- kaikissa LEAKS OK
-
-EI TOIMI (HIMASSA)
-- high_value max int ei näy mutta saa näkyviin jos projection = 0
 
 FINAL CHECKIT:
 
@@ -84,19 +81,6 @@ FINAL CHECKIT:
 
 _>>>>>>>>>>>>> DONE
 
-Chekattu:
-
-maps/ ja test_maps/ chekkien jälkee korjattu:
-	- random_char (ä) toimii ja pyramide (hexa) toimii
-	- onepoint (5) toimii ja muutkin mahollisesti jopa
-
-kaikki maps/ <mapit> katottu tällä versiolla ke 17:50
-	- ei leakkeja, kaikki näyttää hyviltä 
-
-poistettu check_linesta: lopusta
-	//if (digit == 0 || (space == 0 && length > 1))
-	//	print_error("error: input file character error");
-
 
 //https://www.quora.com/How-do-you-mathematically-spin-a-square
 //https://pbs.twimg.com/media/EePmmJfXoAU9xOn.jpg?name=orig#@troll_lock
@@ -104,16 +88,6 @@ poistettu check_linesta: lopusta
 
 
 TO DO LIST:
-
-
-- READERISSA: FREE Line?!?!? dunno whatsup tsekkaa koululla
-- Chekkaa kontrollit et ne on oikeet koululla
-- Jhakonie lista (alhaalla)
-
-- Checkkaa toimiiko uus map_depth oikein
-
-- max / min integer korkeus ja syvyys???
-- tee vaa kaks viewii
 
 
 In case someone needs inspiration on what to check for fdf before returning it, here's the minimum I’d check if I were to do a pre-eval: 
