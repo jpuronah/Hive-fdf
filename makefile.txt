@@ -6,7 +6,7 @@
 #    By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/19 15:44:35 by jpuronah          #+#    #+#              #
-#    Updated: 2022/06/13 10:04:26 by jpuronah         ###   ########.fr        #
+#    Updated: 2022/06/13 11:12:07 by jpuronah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,3 +44,572 @@ fclean: clean
 	rm -f ./libft/libft.a
 
 re: fclean all
+
+
+
+
+
+conguyen makefile:
+
+NAME = fdf
+
+CC = gcc
+CFLAGS = -Wall -Werror -Wextra
+LIBFT = libft/
+MLX = -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext#-L/ /usr/local/lib/ -lmlx -I /usr/local/include
+FRAMEWORK = -framework OpenGL -framework AppKit
+
+CFILES += main.c
+CFILES += events.c
+CFILES += draw_line.c
+CFILES += draw_image.c
+CFILES += draw.c
+CFILES += parser.c
+CFILES += color_parser.c
+CFILES += parser_check.c
+CFILES += color.c
+CFILES += exit.c
+
+OBJ = $(CFILES:.c=.o)
+
+all: $(NAME)
+
+$(NAME):
+	make -C $(LIBFT)
+	$(CC) -c $(CFLAGS) $(CFILES)
+	$(CC) $(OBJ) $(CFLAGS) -o $(NAME) $(MLX) -Llibft -lft $(FRAMEWORK)
+
+clean:
+	/bin/rm -f $(OBJ)
+	make -C $(LIBFT) clean
+	
+fclean: clean
+	/bin/rm -f $(NAME)
+	make -C $(LIBFT) fclean
+
+re: fclean all
+
+cnysten Makefile:
+
+.SILENT: clean, fclean
+.PHONY: all, clean, fclean, re
+
+NAME = fdf
+
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+
+ifneq ("$(wildcard /usr/local/lib/libmlx.a)", "")
+LIB = -L/usr/local/lib -lmlx
+else
+LIB = -L/usr/X11/lib -lmlx
+endif
+
+LIB += -L./libft/ -lft
+
+ifneq ("$(wildcard /usr/local/include/mlx.h)", "")
+INCL = -I/usr/local/include
+else
+INCL = -I/usr/X11/include
+endif
+
+INCL += -I./libft
+
+FW = -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext
+
+FW2 = -framework OpenGL -framework AppKit
+
+SRC = allocators.c color.c control.c control_utils.c draw.c draw_line.c \
+	  fdf.c image.c menu.c parse.c projection.c \
+	  rotate.c utils.c
+
+OBJ = $(SRC:%.c=%.o)
+
+all: $(NAME)
+
+$(OBJ): $(SRC)
+	@make -C ./libft
+	$(CC) $(CFLAGS) -c $(SRC) $(INCL)
+
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIB) $(FW)
+
+nf:
+	$(CC) -o $(NAME) $(OBJ) $(LIB) $(FW)
+
+clean:
+	-/bin/rm $(OBJ)
+	@make -C ./libft clean
+
+fclean: clean
+	-/bin/rm $(NAME)
+	@make -C ./libft fclean
+
+re: fclean all
+
+
+fdf2/ Makefile
+
+
+FRAEMWORKS=-framework OpenGL -framework AppKit
+FLAGS=-Werror -Wextra -Wall
+NAME=fdf
+SRC=src/*.c
+INCLUDES=libft/libft.a minilibx_macos/libmlx.a
+
+all:
+	@make -C libft/ all
+	@make -C minilibx_macos/ all
+	gcc $(SRC) -o $(NAME) $(FLAGS) $(INCLUDES) $(FRAEMWORKS)
+
+clean:
+	@make -C libft/ clean
+	@make -C minilibx_macos/ clean
+
+fclean: clean
+	/bin/rm -f $(NAME)
+	@make -C libft/ fclean
+
+re: fclean all
+
+push:
+	git add .
+	git status
+	git commit -m fdf
+	git push
+
+
+fdf3 Makefile:
+
+
+NAME = fdf
+
+SRCS = srcs/ft_build_mlx.c \
+	   srcs/ft_get_map.c \
+	   srcs/ft_tools.c \
+	   srcs/ft_tools2.c \
+	   srcs/ft_draw_pixel.c \
+	   srcs/ft_persp.c \
+	   srcs/main.c \
+
+FLAGS = -Wall -Werror -Wextra -I./includes
+
+OBJ = $(SRCS:.c=.o)
+
+all: $(NAME)
+
+$(NAME): $(OBJ)
+	make -C libft
+	gcc -o $(NAME) $(FLAGS) $(OBJ) -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext libft/libft.a
+	echo "Fdf done"
+
+clean:
+	make clean -C libft
+	rm -f $(OBJ)
+
+fclean: clean
+	make fclean -C libft
+	rm -f $(NAME)
+
+re: fclean all
+
+
+fdf4 Makefile
+
+NAME= fdf
+
+FLAGS= 
+
+LIBS= -Lsrc/libft -lft -Lminilibx -lmlx
+
+x86= -Lminilibx/ -lmlx_x86_64
+
+INT= -Lminilibx/ -lmlx_intel-mac
+
+MLX= -Lminilibx -Iminilibx -lmlx -framework OpenGL -framework AppKit
+
+MACOS= -Lminilibx_macos/ -Iminilibx_macos/ -lmlx
+
+FRAMEWORK= -framework OpenGL -framework AppKit
+
+DEBUG= -g
+
+all: $(NAME)
+
+SRC= $(addprefix src/, main.c fdf.c print_util.c read_util1.c read_util2.c free_utils.c draw_utils1.c draw_utils2.c \
+	glb_init.c fdf_hooks1.c fdf_hooks2.c fdf_hooks3.c fdf_hooks4.c)
+
+MLXSRC= $(addprefix minilibx/, mlx_clear_window.c mlx_get_data_addr.c \
+	mlx_int_param_event.c mlx_loop.c mlx_put_image_to_window.c mlx_destroy_image.c \
+	mlx_hook.c mlx_int_set_win_event_mask.c mlx_loop_hook.c mlx_rgb.c \
+	mlx_destroy_window.c mlx_init.c mlx_int_str_to_wordtab.c mlx_mouse_hook.c \
+	mlx_string_put.c mlx_expose_hook.c mlx_int_anti_resize_win.c \
+	mlx_int_wait_first_expose.c mlx_new_image.c mlx_xpm.c mlx_flush_event.c \
+	mlx_int_do_nothing.c mlx_key_hook.c mlx_new_window.c mlx_get_color_value.c \
+	mlx_int_get_visual.c mlx_lib_xpm.c mlx_pixel_put.c)
+
+LIBFT= -Isrc/libft/ -Lsrc/libft/ -lft
+
+GREEN= '\033[0;31'
+
+$(NAME):
+	@printf "Building...\n"
+	@make -C minilibx
+	@echo "\033[0;33m"
+	@make -C src/libft
+	@$(CC) $(MACOS) $(MLX) $(LIBFT) $(SRC) -o fdf
+
+clean:
+	@echo "\033[d"
+	@echo "\033[0;32mCleaning Up..."
+	make -C src/libft clean
+
+fc: fclean
+
+fclean: clean
+	@if [ -a fdf.dSYM ] ; then \
+		echo "\033[0;32mRemoving fdf.dSYM"; \
+		rm -rf fdf.dSYM; \
+	fi
+	@if [ -a $(NAME) ] ; then \
+		echo "\033[0;32mRemoving $(NAME)"; \
+		rm $(NAME); \
+	else \
+		echo "\033[0;32m$(NAME) already removed"; \
+	fi
+	make -C src/libft fclean
+
+re: fc all
+
+.PHONY: $(NAME)
+
+
+fdf5 Makefile
+
+.PHONY: all, $(NAME), test, clean, fclean, re
+
+NAME= fdf
+
+CC= cc
+
+GRAPHICS_FLAGS+= -framework OpenGL -framework AppKit
+
+SRC_PATH= src/
+INC_PATH= includes/
+OBJ_PATH= obj/
+LIBFT_PATH= includes/libft/
+MLX_PATH= includes/minilibx/
+
+OBJ = $(addprefix $(OBJ_PATH),$(OBJ_NAME))
+INC = $(addprefix -I,$(INC_PATH))
+INC_MLX = $(addprefix -I, $(MLX_PATH))
+INC_LFT = $(addprefix -I, $(addprefix $(LIBFT_PATH), $(INC_PATH)))
+
+OBJ_NAME = $(SRC_NAME:.c=.o)
+SRC_NAME = main.c wf_2d_plot.c wf_draw_line.c wf_key_functions.c\
+		   wf_getplots1.c wf_getplots2.c  wf_start_and_end.c\
+		   wf_rgb.c wf_bresenham_init.c wf_image_handler.c\
+		   wf_legend.c wf_expose_handler.c
+
+all: $(NAME)
+
+$(NAME): $(OBJ)
+	@printf "\n"
+	@printf "\033[1m\x1b[36mMaking 42 library...\x1b[0m\n"
+	@make -C $(LIBFT_PATH)
+	@printf "\033[1m\x1b[36mMaking MLX library...\x1b[0m\n"
+	@make -C $(MLX_PATH)
+	@printf "\033[1m\x1b[36mBuilding FDF executable...\x1b[0m\n"
+	@$(CC) -o $(NAME) $(OBJ) -L$(LIBFT_PATH) -lft -L$(MLX_PATH) -lmlx $(GRAPHICS_FLAGS)
+	@printf "\033[1m\x1b[32mReady!\x1b[0m\n"
+
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c
+	@mkdir -p $(OBJ_PATH)
+	@$(CC) $(INC) $(INC_MLX) $(INC_LFT) -o $@ -c $< 
+	@printf "\033[1m\x1b[33m********\x1b[0m"
+
+test: $(OBJ)
+	@printf "\033[1m\x1b[33mRefreshing executable...\n"
+	@$(CC) -o $(NAME) $(OBJ) -L$(LIBFT_PATH) -lft -L$(MLX_PATH) -lmlx $(GRAPHICS_FLAGS)
+	@printf "\033[1m\x1b[32mReady!\x1b[0m\n"
+
+clean:
+	@printf "\033[1m\x1b[31mRemoving object files...\x1b[0m\n"
+	@make -C $(LIBFT_PATH) clean
+	@make -C $(MLX_PATH) clean
+	@rm -rf $(OBJ_PATH)
+	@printf "\033[1m\x1b[36mObject files removed.\x1b[0m\n"
+
+fclean: clean
+	@printf "\033[1m\x1b[31mReverting to zero state...\x1b[0m\n"
+	@make -C $(LIBFT_PATH) fclean
+	@rm -f $(NAME)
+	@printf "\033[1m\x1b[36mClean.\x1b[0m\n"
+	
+re: fclean all
+
+
+fdf6 Makefile
+
+
+NAME		=	fdf
+LIBFT		=	libft/
+GNL			=	get_next_line/
+MLX			=	minilibx/
+LIBFT_A		=	$(addprefix $(LIBFT), libft.a)
+GNL_A		=	$(addprefix $(GNL), libgnl.a)
+MLX_A		=	$(addprefix $(MLX), libmlx.a)
+
+CC			=	gcc
+INCLUDE 	=	includes
+CFLAGS		=	-Wall -Wextra -Werror -I$(INCLUDE)
+RM			=	rm -f
+SRCS		=	fdf.c \
+				srcs/alg_utils.c \
+				srcs/controls.c \
+				srcs/mouse.c \
+				srcs/keyboard.c \
+				srcs/draw.c \
+				srcs/line_alg.c \
+				srcs/project.c \
+				srcs/parse_map.c \
+				srcs/utils.c \
+
+OBJS		=	$(SRCS:%.c=%.o)
+
+all:			$(NAME)
+
+$(NAME):		$(OBJS) $(LIBFT_A) $(GNL_A) $(MLX_A)
+				@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT) -lft -L$(GNL) -lgnl -L$(MLX) -lmlx -lm -o $(NAME) -framework OpenGL -framework AppKit
+				@echo "Linked into executable \033[0;32mfdf\033[0m."
+
+$(LIBFT_A):
+				@$(MAKE) -s -C $(LIBFT)
+				@echo "Compiled $(LIBFT_A)."
+
+$(GNL_A):
+				@$(MAKE) -s -C $(GNL)
+				@echo "Compiled $(GNL_A)."
+
+$(MLX_A):
+				@$(MAKE) -s -C $(MLX)
+				@echo "Compiled $(MLX_A)."
+
+bonus:			all
+
+.c.o:
+				@$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+				@echo "Compiling $<."
+
+localclean:
+				@$(RM) $(OBJS)
+				@echo "Removed object files."
+
+clean:			localclean
+				@$(MAKE) clean -s -C $(LIBFT)
+				@echo "Clean libft."
+				@$(MAKE) clean -s -C $(GNL)
+				@echo "Clean gnl."
+				@$(MAKE) clean -s -C $(MLX)
+				@echo "Clean mlx."
+
+fclean:			localclean
+				@$(MAKE) fclean -s -C $(LIBFT)
+				@echo "Full clean libft."
+				@$(MAKE) fclean -s -C $(GNL)
+				@echo "Full clean gnl."
+				@$(MAKE) clean -s -C $(MLX)
+				@echo "Clean mlx."
+				@$(RM) $(NAME)
+				@echo "Removed executable."
+
+re:				fclean all
+
+.PHONY:			all clean fclean re localclean bonus
+
+
+pbondo Makefile
+
+
+NAME	= fdf
+
+# src / obj files
+SRC		= main.c \
+		  reader.c \
+		  map.c \
+		  window.c \
+		  draw.c \
+		  matrix.c \
+		  mouse.c \
+		  keyboard.c \
+		  image.c \
+		  lineclip.c
+
+OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
+
+# compiler
+CC		= gcc
+CFLAGS	= -Wall -Wextra -Werror -g
+
+# mlx library
+MLX		= ./miniLibX/
+MLX_LIB	= $(addprefix $(MLX),mlx.a)
+MLX_INC	= -I ./miniLibX
+MLX_LNK	= -L ./miniLibX -l mlx -framework OpenGL -framework AppKit
+
+# ft library
+FT		= ./libft/
+FT_LIB	= $(addprefix $(FT),libft.a)
+FT_INC	= -I ./libft
+FT_LNK	= -L ./libft -l ft
+
+# directories
+SRCDIR	= ./src/
+INCDIR	= ./includes/
+OBJDIR	= ./obj/
+
+all: obj $(FT_LIB) $(MLX_LIB) $(NAME)
+
+obj:
+	mkdir -p $(OBJDIR)
+
+$(OBJDIR)%.o:$(SRCDIR)%.c
+	$(CC) $(CFLAGS) $(MLX_INC) $(FT_INC) -I $(INCDIR) -o $@ -c $<
+
+$(FT_LIB):
+	make -C $(FT)
+
+$(MLX_LIB):
+	make -C $(MLX)
+
+$(NAME): $(OBJ)
+	$(CC) $(OBJ) $(MLX_LNK) $(FT_LNK) -lm -o $(NAME)
+
+clean:
+	rm -rf $(OBJDIR)
+	make -C $(FT) clean
+	make -C $(MLX) clean
+
+fclean: clean
+	rm -rf $(NAME)
+	make -C $(FT) fclean
+
+re: fclean all
+
+
+Joku random Makefile
+
+
+NAME					= so_long
+NAME_BONUS				= so_long_bonus
+
+CC						= gcc
+CFLAGS					= -Wall -Werror -Wextra
+AR						= ar rcs
+RM						= rm -rf
+
+LIBFT42_DIR				= ./lib/libft/
+LIBFT42_FLAGS			= -L ./$(LIBFT42_DIR) -lft
+LIBFT42_FILE			= $(LIBFT42_DIR)libft.a
+
+MLX_DIR					= ./lib/mlx/
+
+INCS_DIR				= ./include/
+INCS_DIR_BONUS			= ./include_bonus/
+SRCS_DIR				= ./src/
+SRCS_DIR_BONUS			= ./src_bonus/
+
+INCS					= -I include
+INCS_BONUS_DIR			= -I include_bonus
+MLX_FLAGS				= -lmlx -framework OpenGL -framework Appkit
+
+PATH_DRAW				= $(SRCS_DIR)draw/
+PATH_HOOK				= $(SRCS_DIR)hook/
+PATH_ERROR				= $(SRCS_DIR)error/
+PATH_MAP				= $(SRCS_DIR)map/
+PATH_UTILS				= $(SRCS_DIR)utils/
+PATH_GAME 				= $(SRCS_DIR)game/
+
+PATH_DRAW_BONUS			= $(SRCS_DIR_BONUS)draw_bonus/
+PATH_HOOK_BONUS			= $(SRCS_DIR_BONUS)hook_bonus/
+PATH_ERROR_BONUS		= $(SRCS_DIR_BONUS)error_bonus/
+PATH_MAP_BONUS			= $(SRCS_DIR_BONUS)map_bonus/
+PATH_UTILS_BONUS		= $(SRCS_DIR_BONUS)utils_bonus/
+PATH_GAME_BONUS			= $(SRCS_DIR_BONUS)game_bonus/
+
+SRCS					= $(SRCS_DIR)main.c \
+						$(PATH_ERROR)error.c \
+						$(PATH_MAP)parse_map.c $(PATH_MAP)validate_map.c \
+						$(PATH_UTILS)ft_ptr_realloc.c $(PATH_UTILS)ft_get_line.c $(PATH_UTILS)ft_make_xpm_img.c $(PATH_UTILS)ft_make_iterable_sprites.c \
+						$(PATH_UTILS)ft_lst_component.c $(PATH_UTILS)ft_put_img.c \
+						$(PATH_GAME)game.c \
+						$(PATH_DRAW)draw.c $(PATH_DRAW)draw_animate.c \
+						$(PATH_HOOK)key_hook.c $(PATH_HOOK)loop_hook.c $(PATH_HOOK)handlers.c
+
+SRCS_BONUS				= $(SRCS_DIR_BONUS)main_bonus.c \
+						$(PATH_ERROR_BONUS)error_bonus.c \
+						$(PATH_MAP_BONUS)parse_map_bonus.c $(PATH_MAP_BONUS)validate_map_bonus.c \
+						$(PATH_UTILS_BONUS)ft_ptr_realloc_bonus.c $(PATH_UTILS_BONUS)ft_get_line_bonus.c \
+						$(PATH_UTILS_BONUS)ft_make_xpm_img_bonus.c $(PATH_UTILS_BONUS)ft_put_img_bonus.c\
+						$(PATH_UTILS_BONUS)ft_make_iterable_sprites_bonus.c \
+						$(PATH_UTILS_BONUS)ft_lst_component_bonus.c \
+						$(PATH_GAME_BONUS)game_bonus.c \
+						$(PATH_DRAW_BONUS)draw_bonus.c $(PATH_DRAW_BONUS)draw_animate_bonus.c \
+						$(PATH_DRAW_BONUS)draw_step_bonus.c \
+						$(PATH_HOOK_BONUS)key_hook_bonus.c $(PATH_HOOK_BONUS)loop_hook_bonus.c \
+						$(PATH_HOOK_BONUS)handlers_bonus.c
+
+OBJS					= $(SRCS:.c=.o)
+OBJS_BONUS				= $(SRCS_BONUS:.c=.o)
+
+.c.o :
+	$(CC) $(CFLAGS) -I $(INCS_DIR) -I $(INCS_DIR_BONUS) -o $@ -c $?
+
+$(NAME) : $(OBJS)
+	make -C $(LIBFT42_DIR)
+	make -C $(MLX_DIR)
+	$(CC) -o $(NAME) $(OBJS) $(LIBFT42_FLAGS) -I $(INCS_DIR) -L $(MLX_DIR) $(MLX_FLAGS)
+
+all : $(NAME)
+
+clean :
+	make -C $(LIBFT42_DIR) clean
+	make -C $(MLX_DIR) clean
+	$(RM) $(OBJS) $(OBJS_BONUS) so_long.dSYM
+
+fclean : clean
+	make -C $(LIBFT42_DIR) fclean
+	$(RM) $(NAME) $(NAME_BONUS) so_long.dSYM
+
+re : fclean all
+
+bonus : $(NAME_BONUS)
+
+$(NAME_BONUS) : $(OBJS_BONUS)
+	make -C $(LIBFT42_DIR)
+	make -C $(MLX_DIR)
+	$(CC) -o $(NAME_BONUS) $(OBJS_BONUS) $(LIBFT42_FLAGS) -I $(INCS_DIR_BONUS) -L $(MLX_DIR) $(MLX_FLAGS)
+
+bonus_re : fclean bonus
+
+test :
+	make -C $(LIBFT42_DIR)
+	make -C $(MLX_DIR)
+	$(CC) -g3 -o $(NAME) $(SRCS) $(LIBFT42_FLAGS) -I $(INCS_DIR) -L $(MLX_DIR) $(MLX_FLAGS)
+
+leak :
+	make -C $(LIBFT42_DIR)
+	make -C $(MLX_DIR)
+	$(CC) -g3 -fsanitize=address -o $(NAME) $(SRCS) $(LIBFT42_FLAGS) -I $(INCS_DIR) -L $(MLX_DIR) $(MLX_FLAGS)
+
+bonus_leak :
+	make -C $(LIBFT42_DIR)
+	make -C $(MLX_DIR)
+	$(CC) -g3 -fsanitize=address -o $(NAME_BONUS) $(SRCS_BONUS) $(LIBFT42_FLAGS) -I $(INCS_DIR_BONUS) -L $(MLX_DIR) $(MLX_FLAGS)
+
+norm :
+	norminette $(SRCS) $(INCS_DIR)*.h
+
+PHONY	: all clean fclean re bonus
+
+
