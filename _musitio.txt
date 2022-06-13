@@ -1,17 +1,18 @@
 KATO KOULULLA:
 	-MITEN MUILLA TOIMII high_value mappi Vs oma
+
+	- TSEKKAA ET MAKEFILE JA FDF_H ON OKAY
 	-Koita näitä:
 
 	-Wall -Wextra -Werror -ansi -pedantic -Wshadow -Wno-missing-noreturn \
 			-Wno-padded -Wno-unreachable-code -Wredundant-decls \
 			-Wmissing-declarations
 
+
 KOULULLA TSEKATTU:
 
 - kaikissa LEAKS OK (maps, test_maps, easy_test_maps)
 
-PUUTTUU
-- TSEKKAA ET MAKEFILE JA FDF_H ON OKAY
 
 
 FUCK YOU KAIKKI TOIMIISAATANA
