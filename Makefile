@@ -6,41 +6,32 @@
 #    By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/19 15:44:35 by jpuronah          #+#    #+#              #
-#    Updated: 2022/06/13 11:03:49 by jpuronah         ###   ########.fr        #
+#    Updated: 2022/06/15 15:35:03 by jpuronah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-#Tämä jiiriin vielä
 NAME = fdf
-SOURCES = main.c read_and_save_map.c vectors.c graphics.c graphics_utility.c image.c keyboard.c map_utility.c line_clipper.c
-INCLUDES = fdf.h
-FLAGS = -Wconversion -Wall -Wextra -Werror
-LINKS = -L /usr/local/lib -lmlx -I /usr/local/include -framework OpenGL -framework AppKit
-LINKSA = /usr/local/lib/libmlx.a
-LINKSHOME = -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext
-LIBFT = libft/libft.a
+SOURCES = main.c read_and_save_map.c vectors.c graphics.c graphics_utility.c \
+image.c keyboard.c map_utility.c line_clipper.c
+OBJECTIVES = $(SOURCES:.c=.o)
+LIBFT = ./libft/
+CFLAGS = -Wall -Wextra -Werror 
+MLX = -L /usr/local/lib -lmlx -I /usr/local/include
+FRAMEWORK = -framework OpenGL -framework AppKit
 
-all: lib $(NAME)
-
-lib:
-	make -C ./libft/
+all: $(NAME)
 
 $(NAME):
-	gcc -g $(FLAGS) -o $(NAME) $(LINKSHOME) $(SOURCES) $(LIBFT)
-
-nf:
-	gcc -o $(NAME) $(LINKSHOME) $(SOURCES) $(LIBFT)
-
-leaks:
-	make leaks -C ./libft/
-	gcc -fsanitize=address -g $(FLAGS) -o $(NAME) $(LINKSHOME) $(SOURCES) $(LIBFT)
+	make -C $(LIBFT)
+	gcc -c $(CFLAGS) $(SOURCES)
+	gcc $(OBJECTIVES) $(CFLAGS) -o $(NAME) $(MLX) -Llibft -lft $(FRAMEWORK)
 
 clean:
-	rm -f *.o
-	rm -f ./libft/*.o
+	/bin/rm -f $(OBJECTIVES)
+	make -C $(LIBFT) clean
 
 fclean: clean
-	rm -f fdf
-	rm -f ./libft/libft.a
+	/bin/rm -f $(NAME)
+	make -C $(LIBFT) fclean
 
 re: fclean all
