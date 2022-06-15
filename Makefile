@@ -6,7 +6,7 @@
 #    By: jpuronah <jpuronah@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/19 15:44:35 by jpuronah          #+#    #+#              #
-#    Updated: 2022/06/12 19:32:17 by jpuronah         ###   ########.fr        #
+#    Updated: 2022/06/13 11:03:49 by jpuronah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,14 +26,14 @@ lib:
 	make -C ./libft/
 
 $(NAME):
-	gcc -g $(FLAGS) -o $(NAME) $(LINKS) $(SOURCES) $(LIBFT)
+	gcc -g $(FLAGS) -o $(NAME) $(LINKSHOME) $(SOURCES) $(LIBFT)
 
 nf:
-	gcc -o $(NAME) $(LINKS) $(SOURCES) $(LIBFT)
+	gcc -o $(NAME) $(LINKSHOME) $(SOURCES) $(LIBFT)
 
 leaks:
 	make leaks -C ./libft/
-	gcc -fsanitize=address -g $(FLAGS) -o $(NAME) $(LINKS) $(SOURCES) $(LIBFT)
+	gcc -fsanitize=address -g $(FLAGS) -o $(NAME) $(LINKSHOME) $(SOURCES) $(LIBFT)
 
 clean:
 	rm -f *.o
